@@ -1,0 +1,11 @@
+c:\users\amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\users\amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\obj\x86\Debug\RandomWalker.Properties.Resources.resources
+c:\users\amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\obj\x86\Debug\GenerateResource.read.1.tlog
+c:\users\amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\obj\x86\Debug\GenerateResource.write.1.tlog
+c:\users\amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\RandomWalker.exe
+c:\users\amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\RandomWalker.pdb
+c:\users\amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\obj\x86\Debug\RandomWalker.exe
+c:\users\amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\obj\x86\Debug\RandomWalker.pdb
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\obj\x86\Debug\RandomWalker.WalkEnviornment.resources
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\Common.dll
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\Common.pdb

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="cfdc5205-8d49-4353-ac9d-3cab6637f63b" name="Amichai@AMICHAI-PC 2011-09-14 16:55:06" runUser="Amichai-PC\Amichai" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <TestSettings name="Local" id="a56485e7-5df0-4952-9175-c64a6920dc4a">
+    <Description>These are default test settings for a local test run.</Description>
+    <Deployment enabled="false" runDeploymentRoot="Amichai_AMICHAI-PC 2011-09-14 16_55_06">
+      <DeploymentItem filename="C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\RandomWalker.exe" />
+    </Deployment>
+    <Execution>
+      <TestTypeSpecific />
+      <AgentRule name="Execution Agents">
+      </AgentRule>
+    </Execution>
+  </TestSettings>
+  <Times creation="2011-09-14T16:55:06.7882749-04:00" queuing="2011-09-14T16:55:08.6143793-04:00" start="2011-09-14T16:55:08.8383921-04:00" finish="2011-09-14T16:57:00.6227858-04:00" />
+  <ResultSummary outcome="Error">
+    <Counters total="2" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="1" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="AMICHAI-PC" outcome="Error" timestamp="2011-09-14T16:57:00.6207857-04:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <TestDefinitions>
+    <UnitTest name="GetIntersectonPointTest" storage="c:\users\amichai\documents\visual studio 2010\projects\randomwalker\walkertest\bin\debug\walkertest.dll" id="c0dc3f29-8ac1-35c3-7857-40ca5dab4b7e">
+      <Execution id="3af4a1ed-8023-4766-ae33-9f281c0671f9" />
+      <TestMethod codeBase="C:/Users/Amichai/documents/visual studio 2010/Projects/RandomWalker/WalkerTest/bin/Debug/WalkerTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WalkerTest.LineSegmentTest, WalkerTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="GetIntersectonPointTest" />
+    </UnitTest>
+    <UnitTest name="TwoLineReflectionTest" storage="c:\users\amichai\documents\visual studio 2010\projects\randomwalker\walkertest\bin\debug\walkertest.dll" id="5bb15401-cca9-b075-b46e-cd1ba7f6a647">
+      <Execution id="ed88df68-e0b9-4856-98c7-39b824a91257" />
+      <TestMethod codeBase="C:/Users/Amichai/documents/visual studio 2010/Projects/RandomWalker/WalkerTest/bin/Debug/WalkerTest.DLL" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="WalkerTest.LineSegmentTest, WalkerTest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" name="TwoLineReflectionTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="5bb15401-cca9-b075-b46e-cd1ba7f6a647" executionId="ed88df68-e0b9-4856-98c7-39b824a91257" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestEntry testId="c0dc3f29-8ac1-35c3-7857-40ca5dab4b7e" executionId="3af4a1ed-8023-4766-ae33-9f281c0671f9" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="ed88df68-e0b9-4856-98c7-39b824a91257" testId="5bb15401-cca9-b075-b46e-cd1ba7f6a647" testName="TwoLineReflectionTest" computerName="AMICHAI-PC" duration="00:01:51.5923827" startTime="2011-09-14T16:55:09.0304031-04:00" endTime="2011-09-14T16:57:00.6227858-04:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="ed88df68-e0b9-4856-98c7-39b824a91257">
+    </UnitTestResult>
+    <UnitTestResult executionId="3af4a1ed-8023-4766-ae33-9f281c0671f9" testId="c0dc3f29-8ac1-35c3-7857-40ca5dab4b7e" testName="GetIntersectonPointTest" computerName="AMICHAI-PC" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="NotExecuted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="3af4a1ed-8023-4766-ae33-9f281c0671f9">
+    </UnitTestResult>
+  </Results>
+</TestRun>
