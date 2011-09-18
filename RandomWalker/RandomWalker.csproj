@@ -58,7 +58,6 @@
     </Compile>
     <Compile Include="CoordinateSystem.cs" />
     <Compile Include="EnviornmentMap.cs" />
-    <Compile Include="LineSegment.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="ObstructionRenderer.cs" />
     <Compile Include="WalkEnviornment.cs">

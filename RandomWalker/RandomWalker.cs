@@ -56,7 +56,7 @@ namespace RandomWalker {
 			foreach (IObstruction obst in obstructions) {
 				angleToReturnOn = obst.TestForCollision(path);
 				if (angleToReturnOn != null && stepCounter < numberOfSteps) {
-					Vector reflectedLine = new Vector(path.EndingPos, angleToReturnOn, path.Magnitude);
+					Vector reflectedLine = new Vector(path.EndingPos, angleToReturnOn, path.Magnitude());
 					pathWalker(reflectedLine);
 					testForCollisionAndAdd(reflectedLine);
 				}

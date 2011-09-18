@@ -35,16 +35,17 @@ namespace RandomWalker {
 		}
 		public bool DrawMe {get; set;}
 		public Angle TestForCollision(Vector path) {
-			if (path.Angle.InRadians() == 0)
-				throw new Exception("How did this happen?");
+			if (path.Angle().InRadians() == 0)
+				throw new Exception("This should never happen!");
 			if (path.EndingPos.GetX() <= BoundingRectangle.Left || path.EndingPos.GetX() >= BoundingRectangle.Right){
-				return new Angle(path.Rise, -path.Run);
+				return new Angle(path.YComponent(), -path.XComponent());
 			}
 			if (path.EndingPos.GetY() >= BoundingRectangle.Bottom) {
-				return new Angle(-path.Rise, path.Run);
+				return new Angle(-path.YComponent(), path.XComponent());
 			}
-			if (path.EndingPos.GetY() <= BoundingRectangle.Top)
-				return new Angle(path.Rise, path.Run).Negate();
+			if (path.EndingPos.GetY() <= BoundingRectangle.Top) {
+				return new Angle(path.YComponent(), path.XComponent()).Negate();
+			}
 			return null;
 		}
 		public Rectangle BoundingRectangle { get; set; }
@@ -56,21 +57,22 @@ namespace RandomWalker {
 		public Angle TestForCollision(Vector path) {
 			var line = path.AsLineGeometry();
 			var intersect = Geometry.FillContainsWithDetail(line);
-			if (intersect != IntersectionDetail.Empty) { 
-				Angle angleToReturn = new Angle(new Vector(path.EndingPos, CenterPoint).Angle.InRadians() * 2 - path.Angle.InRadians());
+			if (intersect != IntersectionDetail.Empty) {
+				Vector reflected = path.ReflectLine(new Vector(path.EndingPos, CenterPoint));
+
+				Angle angleToReturn = new Angle(new Vector(path.EndingPos, CenterPoint).Angle().InRadians() * 2 - path.Angle().InRadians());
 
 				//Testing code - see if the new line gets away:
-				Vector reflectedLine = new Vector(path.EndingPos, angleToReturn, path.Magnitude);
+				Vector reflectedLine = new Vector(path.EndingPos, angleToReturn, path.Magnitude());
 				if (Geometry.FillContainsWithDetail(reflectedLine.AsLineGeometry()) != IntersectionDetail.Empty) {
 					throw new Exception("You didn't get out");
 				}
-				angleToReturn = new Angle(new Vector(path.EndingPos, CenterPoint).Angle.InRadians() * 2 - path.Angle.InRadians()).Negate();
-				Vector reflectedLine1 = new Vector(path.EndingPos, angleToReturn, path.Magnitude);
+				angleToReturn = new Angle(new Vector(path.EndingPos, CenterPoint).Angle().InRadians() * 2 - path.Angle().InRadians()).Negate();
+				Vector reflectedLine1 = new Vector(path.EndingPos, angleToReturn, path.Magnitude());
 				if (Geometry.FillContainsWithDetail(reflectedLine1.AsLineGeometry()) != IntersectionDetail.Empty) {
 					throw new Exception("You didn't get out");
 				}
 				//end of testing code
-				r
 				return angleToReturn;
 			}
 			return null;

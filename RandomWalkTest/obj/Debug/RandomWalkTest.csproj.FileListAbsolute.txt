@@ -1,0 +1,7 @@
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalkTest\bin\Debug\RandomWalkTest.dll
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalkTest\bin\Debug\RandomWalkTest.pdb
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalkTest\bin\Debug\Common.dll
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalkTest\bin\Debug\Common.pdb
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalkTest\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalkTest\obj\Debug\RandomWalkTest.dll
+C:\Users\Amichai\documents\visual studio 2010\Projects\RandomWalker\RandomWalkTest\obj\Debug\RandomWalkTest.pdb
