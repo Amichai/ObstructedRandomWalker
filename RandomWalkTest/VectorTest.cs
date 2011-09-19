@@ -65,13 +65,13 @@ namespace RandomWalkTest
 		///</summary>
 		[TestMethod()]
 		public void ReflectLineTest() {
-			Position start = null; // TODO: Initialize to an appropriate value
-			Position end = null; // TODO: Initialize to an appropriate value
-			Vector target = new Vector(start, end); // TODO: Initialize to an appropriate value
-			Vector lineToReflectOver = null; // TODO: Initialize to an appropriate value
-			Vector expected = null; // TODO: Initialize to an appropriate value
-			Vector actual;
-			actual = target.ReflectLine(lineToReflectOver);
+			Vector start = null; // TODO: Initialize to an appropriate value
+			Vector end = null; // TODO: Initialize to an appropriate value
+			LineSegment target = new LineSegment(start, end); // TODO: Initialize to an appropriate value
+			LineSegment lineToReflectOver = null; // TODO: Initialize to an appropriate value
+			LineSegment expected = null; // TODO: Initialize to an appropriate value
+			LineSegment actual;
+			actual = target.ReflectOverLineThroughOrigin(lineToReflectOver);
 			Assert.AreEqual(expected, actual);
 			Assert.Inconclusive("Verify the correctness of this test method.");
 		}
@@ -82,9 +82,9 @@ namespace RandomWalkTest
 		[TestMethod()]
 		public void op_MultiplyTest() {
 			double a = 0F; // TODO: Initialize to an appropriate value
-			Vector b = null; // TODO: Initialize to an appropriate value
-			Vector expected = null; // TODO: Initialize to an appropriate value
-			Vector actual;
+			LineSegment b = null; // TODO: Initialize to an appropriate value
+			LineSegment expected = null; // TODO: Initialize to an appropriate value
+			LineSegment actual;
 			actual = (a * b);
 			Assert.AreEqual(expected, actual);
 			Assert.Inconclusive("Verify the correctness of this test method.");
@@ -95,8 +95,8 @@ namespace RandomWalkTest
 		///</summary>
 		[TestMethod()]
 		public void op_MultiplyTest1() {
-			Vector a = null; // TODO: Initialize to an appropriate value
-			Vector b = null; // TODO: Initialize to an appropriate value
+			LineSegment a = null; // TODO: Initialize to an appropriate value
+			LineSegment b = null; // TODO: Initialize to an appropriate value
 			double expected = 0F; // TODO: Initialize to an appropriate value
 			double actual;
 			actual = (a * b);
@@ -109,10 +109,10 @@ namespace RandomWalkTest
 		///</summary>
 		[TestMethod()]
 		public void op_SubtractionTest() {
-			Vector a = new Vector(new Position(3, 2), new Position(1, 5));
-			Vector b = new Vector(new Position(1, 2), new Position(6, 9));
-			Vector expected = null;
-			Vector actual;
+			LineSegment a = new LineSegment(new Vector(3, 2), new Vector(1, 5));
+			LineSegment b = new LineSegment(new Vector(1, 2), new Vector(6, 9));
+			LineSegment expected = null;
+			LineSegment actual;
 			actual = (a - b);
 			Assert.AreEqual(expected, actual);
 			Assert.Inconclusive("Verify the correctness of this test method.");

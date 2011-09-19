@@ -17,7 +17,7 @@ namespace RandomWalker {
 			InitializeComponent(map.Size);
 			mapDisplay.Map = map;
 			walker = new RandomWalker(map, this);
-			walker.InitiateRandomWalk(new Position(map.Size.Width / 2, map.Size.Height / 2));
+			walker.InitiateRandomWalk(new Vector(map.Size.Width / 2, map.Size.Height / 2));
 		}
 
 		private void Walk_Click(object sender, EventArgs e) {

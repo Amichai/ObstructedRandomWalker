@@ -8,14 +8,14 @@ using Common;
 namespace RandomWalker {
 	class ObstructionRenderer {
 		public ObstructionRenderer(MapObstructionProperties properties) {
-			List<Position> centerPoints = new List<Position>();
+			List<Vector> centerPoints = new List<Vector>();
 			Random random = new Random();
 			for (int i = 0; i < properties.NumberOfObstructions; i++) {
 				int xPos = random.Next(properties.Width);
 				int yPos = random.Next(properties.Height);
-				centerPoints.Add(new Position(xPos, yPos));
+				centerPoints.Add(new Vector(xPos, yPos));
 			}
-			foreach (Position p in centerPoints) {
+			foreach (Vector p in centerPoints) {
 				int angleOfExtension = random.Next(0, 360);
 				int axis1 = random.Next(properties.axisMin, properties.axisMax);
 				int axis2 = random.Next(properties.axisMin, properties.axisMax);

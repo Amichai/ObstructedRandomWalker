@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Windows.Media;
+//using System.Windows.Media;
 using System.Diagnostics;
 using Common;
 
@@ -22,47 +22,48 @@ namespace RandomWalker {
 			boardBounds = new Rectangle(0,0,map.Size.Width,map.Size.Height);
 			obstructions = map.Obstructions;
 		}
+
 		/// <summary>Returns a new angle in radians</summary>
 		double newDirectionGenerator(){
 			return ((double)random.Next(360) + random.NextDouble()) * (Math.PI / 180d);
 		}
-		Position randomLocationGenerator() {
+		Vector randomLocationGenerator() {
 			int xPos = random.Next(boardBounds.Width);
 			int yPos = random.Next(boardBounds.Height);
-			return new Position(xPos, yPos);
+			return new Vector(xPos, yPos);
 		}
-		public Position CurrentPosition;
+		public Vector CurrentPosition;
 		private static int stepCounter;
 		private int numberOfSteps;
-		internal void InitiateRandomWalk(Position startingPosition = null, double stepSize = 20, int numberOfSteps = 1000) {
+		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 20, int numberOfSteps = 1000) {
 			this.numberOfSteps = numberOfSteps;
 			startingPosition = CurrentPosition;
 			if (startingPosition == null) {
-				CurrentPosition = new Position(boardBounds.Width / 2, boardBounds.Height /2);
+				CurrentPosition = new Vector(boardBounds.Width / 2, boardBounds.Height /2);
 			}
-			Position endingPosition = null;
+			Vector endingPosition = null;
 			for (stepCounter = 0; stepCounter < numberOfSteps; stepCounter++) {
 				double angleToWalk = newDirectionGenerator();
 				double x2 = CurrentPosition.GetX() + stepSize * Math.Cos(angleToWalk);
 				double y2 = CurrentPosition.GetY() + stepSize * Math.Sin(angleToWalk);
-				endingPosition = new Position(x2, y2);
-				Vector newPath = new Vector(CurrentPosition, endingPosition);
+				endingPosition = new Vector(x2, y2);
+				LineSegment newPath = new LineSegment(CurrentPosition, endingPosition);
 				pathWalker(newPath);
 				testForCollisionAndAdd(newPath);
 			}
 		}
-		private void testForCollisionAndAdd(Vector path){
+		private void testForCollisionAndAdd(LineSegment path){
 			Angle angleToReturnOn;
 			foreach (IObstruction obst in obstructions) {
 				angleToReturnOn = obst.TestForCollision(path);
 				if (angleToReturnOn != null && stepCounter < numberOfSteps) {
-					Vector reflectedLine = new Vector(path.EndingPos, angleToReturnOn, path.Magnitude());
+					LineSegment reflectedLine = new LineSegment(path.EndingPos, angleToReturnOn, path.Magnitude());
 					pathWalker(reflectedLine);
 					testForCollisionAndAdd(reflectedLine);
 				}
 			}
 		}
-		private void pathWalker(Vector path){
+		private void pathWalker(LineSegment path){
 			stepCounter++;
 			g.DrawLine(new System.Drawing.Pen(System.Drawing.Color.Blue, 1f), (int)path.StartingPos.GetX(), (int)path.StartingPos.GetY(), (int)path.EndingPos.GetX(), (int)path.EndingPos.GetY());
 			fullPathWalked.Add(path);
@@ -71,8 +72,8 @@ namespace RandomWalker {
 	}
 
 	public class FullPathWalked {
-		private List<Vector> fullPath = new List<Vector>();
-		public void Add(Vector addMe) {
+		private List<LineSegment> fullPath = new List<LineSegment>();
+		public void Add(LineSegment addMe) {
 			fullPath.Add(addMe);
 		}
 	}
