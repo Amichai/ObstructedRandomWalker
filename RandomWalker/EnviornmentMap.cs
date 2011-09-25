@@ -5,6 +5,7 @@ using System.Text;
 using System.Drawing;
 using System.Windows.Controls;
 using Common;
+using System.Diagnostics;
 
 namespace RandomWalker {
 	public class EnviornmentMap {
@@ -19,7 +20,7 @@ namespace RandomWalker {
 
 	public interface IObstruction{
 		bool DrawMe {get; set;}
-		Angle TestForCollision(LineSegment path);
+		ReflectionReturnValue TestForCollision(LineSegment path);
 		Rectangle BoundingRectangle { get; set; }
 		Vector CenterPoint { get; set; }
 		System.Windows.Media.Geometry Geometry { get; set; }
@@ -33,19 +34,20 @@ namespace RandomWalker {
 			this.DrawMe = false;
 		}
 		public bool DrawMe {get; set;}
-		public Angle TestForCollision(LineSegment path) {
+		public ReflectionReturnValue TestForCollision(LineSegment path) {
+			Angle angleToReturnOn = null;
 			if (path.Angle().InRadians() == 0)
 				throw new Exception("This should never happen!");
 			if (path.EndingPos.GetX() <= BoundingRectangle.Left || path.EndingPos.GetX() >= BoundingRectangle.Right){
-				return new Angle(path.YComponent(), -path.XComponent());
+				angleToReturnOn =new Angle(path.YComponent(), -path.XComponent());
 			}
 			if (path.EndingPos.GetY() >= BoundingRectangle.Bottom) {
-				return new Angle(-path.YComponent(), path.XComponent());
+				angleToReturnOn= new Angle(-path.YComponent(), path.XComponent());
 			}
 			if (path.EndingPos.GetY() <= BoundingRectangle.Top) {
-				return new Angle(path.YComponent(), path.XComponent()).Negate();
+				angleToReturnOn = new Angle(path.YComponent(), path.XComponent()).Negate();
 			}
-			return null;
+			return new ReflectionReturnValue(angleToReturnOn);
 		}
 		public Rectangle BoundingRectangle { get; set; }
 		public Vector CenterPoint { get; set; }
@@ -53,22 +55,25 @@ namespace RandomWalker {
 	}
 
 	public class Ellipse : IObstruction {
-		public Angle TestForCollision(LineSegment path) {
-			var line = path.AsLineGeometry();
-			var intersect = Geometry.FillContainsWithDetail(line);
+		public ReflectionReturnValue TestForCollision(LineSegment path) {
+			var rectangle = new System.Windows.Rect((int)path.EndingPos.GetX(), (int)path.EndingPos.GetY(), 1,0);
+			var intersect = Geometry.FillContainsWithDetail(new System.Windows.Media.RectangleGeometry(rectangle));
 			if (intersect != System.Windows.Media.IntersectionDetail.Empty) {
+				Angle incomingLineAngle = 180 - path.Angle();
 				Angle incidentAngle = path.AngleBetweenPoints(CenterPoint);
-				Vector resultantEndPoint = path.StartingPos.RotateAbout(path.EndingPos, new Angle(-incidentAngle.InRadians() *2 ));
-				LineSegment resultantVector = new LineSegment(path.EndingPos, resultantEndPoint);
-
-				//Testing code - see if the new line gets away:
-				if (Geometry.FillContainsWithDetail(resultantVector.AsLineGeometry()) != System.Windows.Media.IntersectionDetail.Empty) {
-					//throw new Exception("You didn't get out");
-				}
-				//end of testing code
-				return resultantVector.Angle();
+				Debug.Print("Angle of incoming line: " +incomingLineAngle.ToString());
+				Debug.Print("Angle to center line: " + incidentAngle.InDegrees().ToString());
+				Angle returnAngle = path.Angle() - incidentAngle * 2;
+				Debug.Print("Return Angle: " + returnAngle.ToString());
+				return new ReflectionReturnValue(returnAngle, new LineSegment(CenterPoint, path.EndingPos));
 			}
 			return null;
+		}
+
+		private bool youGotOutOfTheEllipse(LineSegment resultantVector) {
+			if (Geometry.FillContainsWithDetail(resultantVector.AsLineGeometry()) != System.Windows.Media.IntersectionDetail.Empty) {
+				return false;
+			} else return true;
 		}
 
 		public Ellipse(Vector centerPt, int radius1, int radius2) {

@@ -1,7 +1,6 @@
-﻿using RandomWalker.Controls;
-using System.Drawing;
-namespace RandomWalker {
-	partial class WalkEnviornment {
+﻿using System.Drawing;
+namespace Walker {
+	partial class WalkerForm {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
@@ -26,22 +25,11 @@ namespace RandomWalker {
 		/// </summary>
 		private void InitializeComponent(Size mapSize) {
 			this.components = new System.ComponentModel.Container();
-			this.label = new System.Windows.Forms.Label();
-			this.mapDisplay = new EnvironmentDisplay();
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.Text = "Walker";
+			this.mapDisplay = new MapDisplay();
 			this.Walk = new System.Windows.Forms.Button();
 			this.Reset = new System.Windows.Forms.Button();
-			this.SuspendLayout();
-			// 
-			// label
-			// 
-			this.label.AutoSize = true;
-			this.label.BackColor = System.Drawing.Color.White;
-			this.label.Dock = System.Windows.Forms.DockStyle.Bottom;
-			this.label.Location = new System.Drawing.Point(0, 642);
-			this.label.Name = "label";
-			this.label.Size = new System.Drawing.Size(35, 13);
-			this.label.TabIndex = 1;
-			this.label.Text = "label1";
 			//
 			// mapDisplay
 			// 
@@ -71,8 +59,6 @@ namespace RandomWalker {
 			this.Reset.Text = "Reset";
 			this.Reset.UseVisualStyleBackColor = true;
 			this.Reset.Click += new System.EventHandler(this.Reset_Click);
-
-
 			// 
 			// WalkEnviornment
 			// 
@@ -81,21 +67,23 @@ namespace RandomWalker {
 			this.ClientSize = mapSize;
 			this.Controls.Add(this.Walk);
 			this.Controls.Add(this.Reset);
-			this.Controls.Add(this.label);
 			this.Controls.Add(this.mapDisplay);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Name = "WalkEnviornment";
-			this.Text = "FakeRobotHost";
+			this.Text = "RandomWalker";
 			this.ResumeLayout(false);
 			this.PerformLayout();
-
 		}
+
+
+
+
 
 		#endregion
 
-		private System.Windows.Forms.Label label;
-		private Controls.EnvironmentDisplay mapDisplay;
+		private MapDisplay mapDisplay;
 		private System.Windows.Forms.Button Walk;
 		private System.Windows.Forms.Button Reset;
 	}
 }
+

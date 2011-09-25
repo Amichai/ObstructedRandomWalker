@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomWalker", "RandomWalker\RandomWalker.csproj", "{4F5445BB-8A1E-4C53-A00D-D701BEC6CA87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RandomWalker_", "RandomWalker\RandomWalker_.csproj", "{4F5445BB-8A1E-4C53-A00D-D701BEC6CA87}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0A78FF52-8266-484A-B13D-B91794346D80}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\OpenPadProject\Common\Common.csproj", "{D7BCE323-ADC9-4E4C-9DB9-E54E3BE20559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Walker", "Walker\Walker.csproj", "{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -45,6 +47,16 @@ Global
 		{D7BCE323-ADC9-4E4C-9DB9-E54E3BE20559}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{D7BCE323-ADC9-4E4C-9DB9-E54E3BE20559}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D7BCE323-ADC9-4E4C-9DB9-E54E3BE20559}.Release|x86.ActiveCfg = Release|Any CPU
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Debug|x86.ActiveCfg = Debug|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Debug|x86.Build.0 = Debug|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Release|Any CPU.ActiveCfg = Release|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Release|Mixed Platforms.Build.0 = Release|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Release|x86.ActiveCfg = Release|x86
+		{47E10DA9-6881-4127-8C9E-9B7C9452CAB8}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

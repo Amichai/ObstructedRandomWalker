@@ -8,29 +8,29 @@ using System.Text;
 using System.Windows.Forms;
 using Common;
 
-namespace RandomWalker {
-	public partial class WalkEnviornment : Form {
+namespace Walker {
+	public partial class WalkerForm : Form {
 		RandomWalker walker;
-		EnviornmentMap map;
-		public WalkEnviornment(EnviornmentMap map) {
+		Size mapSize;
+		Map map;
+		public WalkerForm(Map map) {
 			this.map = map;
-			InitializeComponent(map.Size);
-			mapDisplay.Map = map;
+			mapSize = map.Size;
+			InitializeComponent(mapSize);
+			this.mapDisplay.map = map;
 			walker = new RandomWalker(map, this);
 			walker.InitiateRandomWalk(new Vector(map.Size.Width / 2, map.Size.Height / 2));
+		
 		}
 
 		private void Walk_Click(object sender, EventArgs e) {
-			InitializeComponent(map.Size);
+			InitializeComponent(mapSize);
 			walker.InitiateRandomWalk(walker.CurrentPosition);
 		}
 
 		private void Reset_Click(object sender, EventArgs e) {
-			this.map = new ObstructionRenderer(new MapObstructionProperties()).Map;
-			InitializeComponent(map.Size);
-			mapDisplay.Map = map;
 			walker = new RandomWalker(map, this);
-			walker.InitiateRandomWalk(new Vector(map.Size.Width / 2, map.Size.Height / 2));
+			InitializeComponent(mapSize);
 		}
 	}
 }
