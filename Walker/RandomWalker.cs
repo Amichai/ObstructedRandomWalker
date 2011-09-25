@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Common;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace Walker {
 	class RandomWalker {
@@ -58,8 +59,15 @@ namespace Walker {
 				reflectedLine = obst.TestForCollision(path);
 				if (reflectedLine != null && reflectedLine.ReturnAngle != null && stepCounter < numberOfSteps) {
 					if (!reflectedLine.TestForEscape(obst.Geometry, path)) {
+						//This means we didn't get away
+						//Print relevant error data!!
 						stepCounter = numberOfSteps;
 						pathWalker(reflectedLine.GetReturnLine(path), Color.Green);
+
+						Debug.Print("Point inside obstruction: " + path.EndingPos.ToString());
+						Debug.Print("Angle of incoming line: " + path.Angle().InDegrees().ToString());
+						Debug.Print("Angle of outgoing line: " + reflectedLine.GetReturnLine(path).Angle().InDegrees().ToString());
+						Debug.Print("New endpoint: " + reflectedLine.GetReturnLine(path).EndingPos.ToString());
 					} else {
 						pathWalker(reflectedLine.GetReturnLine(path), Color.Red);
 						testForCollisionAndAdd(reflectedLine.GetReturnLine(path));
@@ -80,8 +88,8 @@ namespace Walker {
 		}
 
 		private void printToBoard(LineSegment path, Color color) {
-			Point startingPoint = new Point((int)path.StartingPos.GetX(), (int)path.StartingPos.GetY());
-			Point endingPoint = new Point((int)path.EndingPos.GetX(), (int)path.EndingPos.GetY());
+			Point startingPoint = new Point((int)path.StartingPos.GetX(), boardBounds.Height - (int)path.StartingPos.GetY());
+			Point endingPoint = new Point((int)path.EndingPos.GetX(), boardBounds.Height - (int)path.EndingPos.GetY());
 			g.DrawLine(new System.Drawing.Pen(color, 1f), startingPoint, endingPoint);
 		}
 	}

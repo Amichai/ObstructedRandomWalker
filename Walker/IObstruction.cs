@@ -31,10 +31,10 @@ namespace Walker {
 			if (intersect != System.Windows.Media.IntersectionDetail.Empty) {
 				Angle incomingLineAngle = 180 - path.Angle();
 				Angle incidentAngle = path.AngleBetweenPoints(centerPoint);
-				Debug.Print("Angle of incoming line: " + incomingLineAngle.ToString());
-				Debug.Print("Angle to center line: " + incidentAngle.InDegrees().ToString());
+				//Debug.Print("Angle of incoming line: " + incomingLineAngle.ToString());
+				//Debug.Print("Angle to center line: " + incidentAngle.InDegrees().ToString());
 				Angle returnAngle = path.Angle() - incidentAngle * 2;
-				Debug.Print("Return Angle: " + returnAngle.ToString());
+				//Debug.Print("Return Angle: " + returnAngle.ToString());
 				return new ReflectedLine(returnAngle);
 			}
 			return null;
@@ -49,18 +49,26 @@ namespace Walker {
 
 		public Walls(Vector bottomLeft, Vector topRight) {
 			DrawMe = false;
-			BoundingRectangle = new System.Windows.Rect(bottomLeft.AsWindowsPoint(), topRight.AsWindowsPoint());
+			BoundingRectangle = new System.Windows.Rect(bottomLeft.GetX(), bottomLeft.GetY(), topRight.GetX(), topRight.GetY());
 			Geometry = new LineGeometry();
 		}
 		public ReflectedLine TestForCollision(Common.LineSegment path) {
 			Angle returnAngle = null;
 			if (path.Angle().InRadians() == 0)
 				throw new Exception("This should never happen!");
-			if (path.EndingPos.GetX() <= BoundingRectangle.Left || path.EndingPos.GetX() >= BoundingRectangle.Right) {
-				returnAngle = new Angle(path.YComponent(), -path.XComponent());
-			}
-			if (path.EndingPos.GetY() >= BoundingRectangle.Bottom|| path.EndingPos.GetY() <= BoundingRectangle.Top) {
-				returnAngle = new Angle(-path.YComponent(), path.XComponent());
+
+			if ((path.EndingPos.GetX() <= BoundingRectangle.Left && path.EndingPos.GetY() <= BoundingRectangle.Y)
+			|| (path.EndingPos.GetX() >= BoundingRectangle.Right && path.EndingPos.GetY() >= BoundingRectangle.Bottom)
+				|| (path.EndingPos.GetX() <= BoundingRectangle.Left && path.EndingPos.GetY() >= BoundingRectangle.Bottom)
+				|| (path.EndingPos.GetX() >= BoundingRectangle.Right && path.EndingPos.GetY() <= BoundingRectangle.Y)) {
+				returnAngle = new Angle(-path.YComponent(), -path.XComponent());
+			} else {
+				if (path.EndingPos.GetX() <= BoundingRectangle.Left || path.EndingPos.GetX() >= BoundingRectangle.Right) {
+					returnAngle = new Angle(path.YComponent(), -path.XComponent());
+				}
+				if (path.EndingPos.GetY() <= BoundingRectangle.Y || path.EndingPos.GetY() >= BoundingRectangle.Bottom) {
+					returnAngle = new Angle(-path.YComponent(), path.XComponent());
+				}
 			}
 			return new ReflectedLine(returnAngle);
 

@@ -47,7 +47,7 @@ namespace Walker {
 			foreach (IObstruction obstruct in map.Obstructions) {
 				using (var brush = new Pen(Color.FromArgb(0, 0, 0))) {
 					if (obstruct.DrawMe == true) {
-						Rectangle boundingRect = new Rectangle((int)obstruct.BoundingRectangle.X, (int)obstruct.BoundingRectangle.Y,
+						Rectangle boundingRect = new Rectangle((int)obstruct.BoundingRectangle.X, Height - (int)obstruct.BoundingRectangle.Y - (int)obstruct.BoundingRectangle.Height,
 													(int)obstruct.BoundingRectangle.Width, (int)obstruct.BoundingRectangle.Height);
 						pe.Graphics.DrawEllipse(brush, boundingRect);
 					}
