@@ -29,12 +29,42 @@ namespace Walker {
 		public ReflectedLine TestForCollision(Common.LineSegment path) {
 			var intersect = Geometry.FillContainsWithDetail(new System.Windows.Media.RectangleGeometry(path.AsSystemRect()));
 			if (intersect != System.Windows.Media.IntersectionDetail.Empty) {
-				Angle incomingLineAngle = 180 - path.Angle();
 				Angle incidentAngle = path.AngleBetweenPoints(centerPoint);
-				//Debug.Print("Angle of incoming line: " + incomingLineAngle.ToString());
-				//Debug.Print("Angle to center line: " + incidentAngle.InDegrees().ToString());
-				Angle returnAngle = path.Angle() - incidentAngle * 2;
-				//Debug.Print("Return Angle: " + returnAngle.ToString());
+				Debug.Print("NEW EVENT LOG ANGLE DATA!:");
+				Debug.Print("Angle to center line: " + incidentAngle.InDegrees().ToString());
+				Angle incidentAngleTimesTwo = incidentAngle * 2;
+				Debug.Print("Angle to center line times two: " + incidentAngleTimesTwo.ToString());
+				Angle threesixtyMinus = (new Angle(360, true) - incidentAngleTimesTwo);
+				Debug.Print("Three sixty minus angle to center line times two: " + threesixtyMinus.ToString());
+				Common.LineSegment lineToCenter = new Common.LineSegment(path.EndingPos, centerPoint);
+				Angle returnAngle;
+				ReflectedLine refLine;
+				Angle oneEighty = new Angle(180, true);
+				if (path.Angle().InDegrees() >= 180) {
+					returnAngle = oneEighty + path.Angle() + threesixtyMinus;
+					refLine = new ReflectedLine(returnAngle);
+					if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
+						return new ReflectedLine(returnAngle);
+					}
+					returnAngle = oneEighty + path.Angle() - threesixtyMinus;
+					refLine = new ReflectedLine(returnAngle);
+					if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
+						return new ReflectedLine(returnAngle);
+					}
+				} else {
+					returnAngle = oneEighty + path.Angle() + threesixtyMinus;
+					refLine = new ReflectedLine(returnAngle);
+					if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
+						return new ReflectedLine(returnAngle);
+					}
+					returnAngle = oneEighty + path.Angle() - threesixtyMinus;
+					refLine = new ReflectedLine(returnAngle);
+					if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
+						return new ReflectedLine(returnAngle);
+					}
+				}
+				Debug.Print("Return angle: " + returnAngle.ToString());
+				throw new Exception("this didn't work");
 				return new ReflectedLine(returnAngle);
 			}
 			return null;
