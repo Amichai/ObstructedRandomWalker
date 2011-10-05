@@ -31,7 +31,7 @@ namespace Walker {
 			Angle returnAngle = A + B + C;
 			ReflectedLine refLine = new ReflectedLine(returnAngle);
 			Angle newIncidentAngle =  refLine.GetReturnLine(path).Flip().AngleBetweenPoints(centerPoint);
-			if (incidentAngle + .1 > newIncidentAngle && incidentAngle - .1 < newIncidentAngle){
+			if (incidentAngle + .05 > newIncidentAngle && incidentAngle - .1 < newIncidentAngle){
 				return new ReflectedLine(returnAngle);
 			} else return null;
 		}
@@ -51,23 +51,30 @@ namespace Walker {
 				ReflectedLine refLine;
 				Angle oneEighty = new Angle(180, true);
 				//SEARCH FOR THE RETURN ANGLE:
+				Debug.Print("Success after 1 try");
 				var outLine = computeReturnAngle(oneEighty, path.Angle(), threesixtyMinus, incidentAngle, path);
 				if (outLine != null) return outLine;
-				outLine = computeReturnAngle(-oneEighty, path.Angle(), threesixtyMinus, incidentAngle, path);
-				if (outLine != null) return outLine;
-				outLine = computeReturnAngle(oneEighty, -path.Angle(), threesixtyMinus, incidentAngle, path);
-				if (outLine != null) return outLine;
-				outLine = computeReturnAngle(-oneEighty, -path.Angle(), threesixtyMinus, incidentAngle, path);
-				if (outLine != null) return outLine;
+				//Debug.Print("Success after 2 tries");
+				//outLine = computeReturnAngle(-oneEighty, path.Angle(), threesixtyMinus, incidentAngle, path);
+				//if (outLine != null) return outLine;
+				//Debug.Print("Success after 3 tries");
+				//outLine = computeReturnAngle(oneEighty, -path.Angle(), threesixtyMinus, incidentAngle, path);
+				//if (outLine != null) return outLine;
+				//Debug.Print("Success after 4 tries");
+				//outLine = computeReturnAngle(-oneEighty, -path.Angle(), threesixtyMinus, incidentAngle, path);
+				//if (outLine != null) return outLine;
+				Debug.Print("Success after 5 tries");
 				outLine = computeReturnAngle(oneEighty, path.Angle(), -threesixtyMinus, incidentAngle, path);
 				if (outLine != null) return outLine;
-				outLine = computeReturnAngle(-oneEighty, path.Angle(), -threesixtyMinus, incidentAngle, path);
-				if (outLine != null) return outLine;
-				outLine = computeReturnAngle(oneEighty, -path.Angle(), -threesixtyMinus, incidentAngle, path);
-				if (outLine != null) return outLine;
-				outLine = computeReturnAngle(-oneEighty, -path.Angle(), -threesixtyMinus, incidentAngle, path);
-				if (outLine != null) return outLine;
-				
+				//Debug.Print("Success after 6 tries");
+				//outLine = computeReturnAngle(-oneEighty, path.Angle(), -threesixtyMinus, incidentAngle, path);
+				//if (outLine != null) return outLine;
+				//Debug.Print("Success after 7 tries");
+				//outLine = computeReturnAngle(oneEighty, -path.Angle(), -threesixtyMinus, incidentAngle, path);
+				//if (outLine != null) return outLine;
+				//Debug.Print("Success after 8 tries");
+				//outLine = computeReturnAngle(-oneEighty, -path.Angle(), -threesixtyMinus, incidentAngle, path);
+				//if (outLine != null) return outLine;
 				
 				returnAngle = oneEighty				+ path.Angle() + threesixtyMinus;
 				#region method 1
