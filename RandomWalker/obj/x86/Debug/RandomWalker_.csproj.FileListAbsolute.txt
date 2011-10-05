@@ -9,3 +9,5 @@ C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\RandomWalker
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\RandomWalker.pdb
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\Common.dll
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\Common.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\Oyster.IntX.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\RandomWalker\bin\Debug\Oyster.IntX.xml
