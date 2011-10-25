@@ -12,16 +12,28 @@ namespace Walker {
 			this.ReturnAngle = returnAngle;
 		}
 
+		static double overrideMagnitude = double.MinValue;
+
 		internal Common.LineSegment GetReturnLine(LineSegment incoming) {
-			return new LineSegment(incoming.EndingPos, ReturnAngle, incoming.Magnitude());
+			if (overrideMagnitude == double.MinValue)
+				return new LineSegment(incoming.EndingPos, ReturnAngle, incoming.Magnitude());
+			else
+				return new LineSegment(incoming.EndingPos, ReturnAngle, overrideMagnitude); ;
 		}
 
-		public bool TestForEscape(System.Windows.Media.Geometry geometry, LineSegment path) {
+		public bool PassedEscapedFromEllipseTest(System.Windows.Media.Geometry geometry, LineSegment path) {
+			if (this == null)
+				throw new NullReferenceException();
+		
 			var intersect2 = geometry.FillContainsWithDetail(
 					new System.Windows.Media.RectangleGeometry(GetReturnLine(path).AsSystemRect()));
 			if (intersect2 != System.Windows.Media.IntersectionDetail.Empty) {
 				return false;
 			} else return true;
+		}
+
+		internal void Extend(double mag) {
+			overrideMagnitude = mag * 1.5;
 		}
 	}
 }

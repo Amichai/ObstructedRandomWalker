@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common;
+using System.Drawing;
 
 namespace Walker {
 	public class Map {
@@ -17,33 +18,50 @@ namespace Walker {
 		public System.Drawing.Point StartingPoint { get; set; }
 
 		public System.Drawing.Size Size { get; set; }
+		static Random random = new Random();
 
 		internal static Map MapBuilder() {
-			List<Vector> centerPoints = new List<Vector>();
 			List<IObstruction> obstructions = new List<IObstruction>();
 			System.Drawing.Size Size = new System.Drawing.Size(Width, Height);
 			System.Drawing.Point startingPoint = new System.Drawing.Point(Size.Width / 2, Size.Height / 2);
-			Random random = new Random();
 			obstructions.Add(new Walls(new Vector(0, 0), new Vector(Width, Height)));
-
-			for (int i = 0; i < NumberOfObstructions; i++) {
-				int xPos = random.Next(Width);
-				int yPos = random.Next(Height);
-				centerPoints.Add(new Vector(xPos, yPos));
+			foreach (Vector p in getCenterPointsAsLattice(new Size(Width, Height))) {
+				//obstructions.Add(new Ellipse(p, getRandomAxis()));
+				obstructions.Add(new Ellipse(p, AxisMin, AxisMax));
 			}
-			foreach (Vector p in centerPoints) {
-				int angleOfExtension = random.Next(0, 360);
-				int axis1 = random.Next(axisMin, axisMax);
-				int axis2 = random.Next(axisMin, axisMax);
-				obstructions.Add(new Ellipse(p, axis1 / 2, axis2 / 2));
-			}
+			
 			return new Map(obstructions, Size, startingPoint);
+		}
+
+		private static Tuple<int, int> getRandomAxis() {
+			int axis1 = random.Next(AxisMin, AxisMax);
+			int axis2 = random.Next(AxisMin, AxisMax);
+			return new Tuple<int, int>(axis1, axis2 );
 		}
 		#region MapBuilder and Obstruction Properties
 		public const int Width = 900,
 			Height = 700,
 			NumberOfObstructions = 1;
-		public const int axisMin = 290, axisMax = 360;
+		public const int AxisMin = 10, AxisMax = 10;
+
+		public static IEnumerable<Vector> getCenterPointsAsLattice(Size mapSize) {
+			int xIncrement = 30, yIncrement = 30;
+			for(int i=0;i < mapSize.Width; i+= xIncrement){
+				for (int j = 0; j < mapSize.Height; j+=yIncrement) {
+					yield return new Vector(i, j);
+				}
+			}
+		}
+
+		public static IEnumerable<Vector> getRandomCenterPoints() {
+			Random random = new Random();
+			for (int i = 0; i < NumberOfObstructions; i++) {
+				int xPos = random.Next(Width);
+				int yPos = random.Next(Height);
+				yield return new Vector(xPos, yPos);
+			}
+		}
+
 		#endregion
 
 	}

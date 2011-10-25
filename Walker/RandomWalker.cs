@@ -35,7 +35,7 @@ namespace Walker {
 		public static int stepCounter;
 		private int numberOfSteps;
 
-		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 20, int numberOfSteps = 1000) {
+		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 5, int numberOfSteps = 100000) {
 			this.numberOfSteps = numberOfSteps;
 			startingPosition = CurrentPosition;
 			if (startingPosition == null) {
@@ -53,21 +53,37 @@ namespace Walker {
 			}
 		}
 
+		int horizBoardIdx = 0,
+			vertBoardIdx = 0;
+
+		private Rectangle getRectangleForCentersToCheck(LineSegment path) {
+			int leftEdge = (int)path.EndingPos.GetX() - Map.AxisMax;
+			if (leftEdge < 0)
+				leftEdge += Map.Width;
+			int topEdge = (int)path.EndingPos.GetY() - Map.AxisMax;
+			if (topEdge < 0)
+				topEdge += Map.Height;
+			int width = Map.AxisMax * 2;
+			if (width + leftEdge > Map.Width)
+			{}
+			int height = Map.AxisMax * 2;
+			if(height + topEdge > Map.Height)
+			{}
+			return new Rectangle(leftEdge, topEdge, height, width);
+			//TODO: This code is buggy/not working and must be fixed!! The bounding rectangle of centers should wrap around the borders!!!!
+		}
+
 		private void testForCollisionAndAdd(LineSegment path) {
 			ReflectedLine reflectedLine = null;
-			foreach (IObstruction obst in obstructions) {
+			Rectangle rectOfCentersToCheck = getRectangleForCentersToCheck(path);
+			foreach (IObstruction obst in obstructions.Where(i => rectOfCentersToCheck.ContainsPoint(i.CenterPoint))) {
 				reflectedLine = obst.TestForCollision(path);
 				if (reflectedLine != null && reflectedLine.ReturnAngle != null && stepCounter < numberOfSteps) {
-					if (!reflectedLine.TestForEscape(obst.Geometry, path)) {
+					if (!reflectedLine.PassedEscapedFromEllipseTest(obst.Geometry, path)) {
 						//This means we didn't get away
 						//Print relevant error data!!
-						stepCounter = numberOfSteps;
 						pathWalker(reflectedLine.GetReturnLine(path), Color.Green);
-
-						Debug.Print("Point inside obstruction: " + path.EndingPos.ToString());
-						Debug.Print("Angle of incoming line: " + path.Angle().InDegrees().ToString());
-						Debug.Print("Angle of outgoing line: " + reflectedLine.GetReturnLine(path).Angle().InDegrees().ToString());
-						Debug.Print("New endpoint: " + reflectedLine.GetReturnLine(path).EndingPos.ToString());
+						//stepCounter = numberOfSteps;
 					} else {
 						pathWalker(reflectedLine.GetReturnLine(path), Color.Red);
 						testForCollisionAndAdd(reflectedLine.GetReturnLine(path));
@@ -78,19 +94,51 @@ namespace Walker {
 
 		List<LineSegment> fullPath = new List<LineSegment>();
 
+		private Vector checkForPassedWalls(LineSegment path) {
+			Vector newEndPoint = null;
+			if (path.EndingPos.GetX() > Map.Width) {
+				horizBoardIdx++;
+				newEndPoint = new Vector(path.EndingPos.GetX() - Map.Width, path.EndingPos.GetY());
+			}
+			if (path.EndingPos.GetX() < 0) {
+				horizBoardIdx--;
+				newEndPoint = new Vector(path.EndingPos.GetX() + Map.Width, path.EndingPos.GetY());
+			}
+			if (path.EndingPos.GetY() > Map.Height) {
+				vertBoardIdx++;
+				newEndPoint = new Vector(path.EndingPos.GetX(), path.EndingPos.GetY() - Map.Height);
+			}
+			if (path.EndingPos.GetY() < 0) {
+				vertBoardIdx--;
+				newEndPoint = new Vector(path.EndingPos.GetX(), path.EndingPos.GetY() + Map.Height);
+			}
+			return newEndPoint;
+		}
+
 		private void pathWalker(LineSegment path, Color color) {
 			stepCounter++;
 			if (color == null)
 				color = Color.Brown;
 			printToBoard(path, color);
 			fullPath.Add(path);
-			CurrentPosition = path.EndingPos;
+			var newEndPt = checkForPassedWalls(path);
+			if (newEndPt == null)
+				CurrentPosition = path.EndingPos;
+			else CurrentPosition = newEndPt;
 		}
 
 		private void printToBoard(LineSegment path, Color color) {
 			Point startingPoint = new Point((int)path.StartingPos.GetX(), boardBounds.Height - (int)path.StartingPos.GetY());
 			Point endingPoint = new Point((int)path.EndingPos.GetX(), boardBounds.Height - (int)path.EndingPos.GetY());
 			g.DrawLine(new System.Drawing.Pen(color, 1f), startingPoint, endingPoint);
+		}
+	}
+
+	public static class RectangleExtensionMethods{
+		public static bool ContainsPoint(this Rectangle rect, Vector point) {
+			if (point.GetX() < rect.X || point.GetX() > rect.Right || point.GetY() < rect.Top || point.GetY() > rect.Bottom)
+				return false;
+			else return true;
 		}
 	}
 }

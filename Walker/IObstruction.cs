@@ -12,26 +12,35 @@ namespace Walker {
 		ReflectedLine TestForCollision(Common.LineSegment path);
 		System.Windows.Rect BoundingRectangle { get; set; }
 		Geometry Geometry { get; set; }
+		Vector CenterPoint { get; set; }
 	}
+
 
 	public class Ellipse : IObstruction {
 		public Geometry Geometry { get; set; }
+		public Vector CenterPoint { get; set; }
+		public Ellipse(Vector centerPt, Tuple<int,int> radii) {
+			Geometry = new EllipseGeometry(centerPt.ToWindowsPt(), (double)radii.Item1, (double)radii.Item2);
+			DrawMe = true;
+			BoundingRectangle = Geometry.Bounds;
+			CenterPoint = centerPt;
+
+		}
+
 		public Ellipse(Vector centerPt, int radius1, int radius2) {
 			Geometry = new EllipseGeometry(centerPt.ToWindowsPt(), (double)radius1, (double)radius2);
 			DrawMe = true;
 			BoundingRectangle = Geometry.Bounds;
-			centerPoint = centerPt;
+			CenterPoint = centerPt;
 		}
 		public bool DrawMe {get; set;}
 		public System.Windows.Rect BoundingRectangle { get; set; }
-		private Vector centerPoint;
-		static int counter = 0;
 
 		private ReflectedLine computeReturnAngle(Angle A, Angle B, Angle C, Angle incidentAngle, Common.LineSegment path) {
 			Angle returnAngle = A + B + C;
 			ReflectedLine refLine = new ReflectedLine(returnAngle);
-			Angle newIncidentAngle =  refLine.GetReturnLine(path).Flip().AngleBetweenPoints(centerPoint);
-			if (incidentAngle + .05 > newIncidentAngle && incidentAngle - .1 < newIncidentAngle){
+			Angle newIncidentAngle =  refLine.GetReturnLine(path).Flip().AngleBetweenPoints(CenterPoint);
+			if (incidentAngle + .05 > newIncidentAngle && incidentAngle - .05 < newIncidentAngle){
 				return new ReflectedLine(returnAngle);
 			} else return null;
 		}
@@ -39,147 +48,44 @@ namespace Walker {
 		public ReflectedLine TestForCollision(Common.LineSegment path) {
 			var intersect = Geometry.FillContainsWithDetail(new System.Windows.Media.RectangleGeometry(path.AsSystemRect()));
 			if (intersect != System.Windows.Media.IntersectionDetail.Empty) {
-				Angle incidentAngle = path.AngleBetweenPoints(centerPoint);
-				Debug.Print("NEW EVENT LOG ANGLE DATA!:");
-				Debug.Print("Angle to center line: " + incidentAngle.InDegrees().ToString());
+				Angle incidentAngle = path.AngleBetweenPoints(CenterPoint);
 				Angle incidentAngleTimesTwo = incidentAngle * 2;
-				Debug.Print("Angle to center line times two: " + incidentAngleTimesTwo.ToString());
 				Angle threesixtyMinus = (new Angle(360, true) - incidentAngleTimesTwo);
-				Debug.Print("Three sixty minus angle to center line times two: " + threesixtyMinus.ToString());
-				Common.LineSegment lineToCenter = new Common.LineSegment(path.EndingPos, centerPoint);
-				Angle returnAngle;
-				ReflectedLine refLine;
+
+				Common.LineSegment lineToCenter = new Common.LineSegment(path.EndingPos, CenterPoint);
 				Angle oneEighty = new Angle(180, true);
 				//SEARCH FOR THE RETURN ANGLE:
-				Debug.Print("Success after 1 try");
 				var outLine = computeReturnAngle(oneEighty, path.Angle(), threesixtyMinus, incidentAngle, path);
-				if (outLine != null) return outLine;
-				//Debug.Print("Success after 2 tries");
-				//outLine = computeReturnAngle(-oneEighty, path.Angle(), threesixtyMinus, incidentAngle, path);
-				//if (outLine != null) return outLine;
-				//Debug.Print("Success after 3 tries");
-				//outLine = computeReturnAngle(oneEighty, -path.Angle(), threesixtyMinus, incidentAngle, path);
-				//if (outLine != null) return outLine;
-				//Debug.Print("Success after 4 tries");
-				//outLine = computeReturnAngle(-oneEighty, -path.Angle(), threesixtyMinus, incidentAngle, path);
-				//if (outLine != null) return outLine;
-				Debug.Print("Success after 5 tries");
+				if (outLine != null)
+					return outLine;
 				outLine = computeReturnAngle(oneEighty, path.Angle(), -threesixtyMinus, incidentAngle, path);
-				if (outLine != null) return outLine;
-				//Debug.Print("Success after 6 tries");
-				//outLine = computeReturnAngle(-oneEighty, path.Angle(), -threesixtyMinus, incidentAngle, path);
-				//if (outLine != null) return outLine;
-				//Debug.Print("Success after 7 tries");
-				//outLine = computeReturnAngle(oneEighty, -path.Angle(), -threesixtyMinus, incidentAngle, path);
-				//if (outLine != null) return outLine;
-				//Debug.Print("Success after 8 tries");
-				//outLine = computeReturnAngle(-oneEighty, -path.Angle(), -threesixtyMinus, incidentAngle, path);
-				//if (outLine != null) return outLine;
-				
-				returnAngle = oneEighty				+ path.Angle() + threesixtyMinus;
-				#region method 1
-				/*
-				Debug.Print("Attempt #1: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
+				if (outLine != null)
+					return outLine;
 
-				returnAngle = oneEighty				+ path.Angle() - threesixtyMinus;
-				Debug.Print("Attempt #2: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = oneEighty.Negate()	+ path.Angle() + threesixtyMinus;
-				Debug.Print("Attempt #3: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = oneEighty.Negate()	+ path.Angle() - threesixtyMinus;
-				Debug.Print("Attempt #4: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = path.Angle() + threesixtyMinus;
-				Debug.Print("Attempt #5: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = path.Angle() - threesixtyMinus;
-				Debug.Print("Attempt #6: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-
-
-				returnAngle = oneEighty - path.Angle() + threesixtyMinus;
-				Debug.Print("Attempt #1: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = oneEighty - path.Angle() - threesixtyMinus;
-				Debug.Print("Attempt #2: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = oneEighty.Negate() - path.Angle() + threesixtyMinus;
-				Debug.Print("Attempt #3: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = oneEighty.Negate() - path.Angle() - threesixtyMinus;
-				Debug.Print("Attempt #4: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = path.Angle().Negate() + threesixtyMinus;
-				Debug.Print("Attempt #5: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}
-
-				returnAngle = path.Angle().Negate() - threesixtyMinus;
-				Debug.Print("Attempt #6: " + returnAngle.ToString());
-				refLine = new ReflectedLine(returnAngle);
-				if (incidentAngle == refLine.GetReturnLine(path).AngleBetweenPoints(centerPoint)) {
-					return new ReflectedLine(returnAngle);
-				}*/
-				#endregion
-				return new ReflectedLine(returnAngle);
+				outLine.Extend(path.Magnitude());
+				outLine = computeReturnAngle(oneEighty, path.Angle(), threesixtyMinus, incidentAngle, path);
+				if (outLine != null && outLine.PassedEscapedFromEllipseTest(Geometry, path) == true)
+					return outLine;
+				outLine = computeReturnAngle(oneEighty, path.Angle(), -threesixtyMinus, incidentAngle, path);
+				if (outLine != null && outLine.PassedEscapedFromEllipseTest(Geometry, path) == true)
+					return outLine;
+				throw new Exception();
 			}
 			return null;
 		}
-
 	}
 
 	public class Walls : IObstruction {
 		public Geometry Geometry { get; set; }
 		public bool DrawMe { get; set; }
 		public System.Windows.Rect BoundingRectangle { get; set; }
+		public Vector CenterPoint { get; set; }
 
 		public Walls(Vector bottomLeft, Vector topRight) {
 			DrawMe = false;
 			BoundingRectangle = new System.Windows.Rect(bottomLeft.GetX(), bottomLeft.GetY(), topRight.GetX(), topRight.GetY());
 			Geometry = new LineGeometry();
+			CenterPoint = new Vector((bottomLeft.GetX() + topRight.GetX()) / 2, (bottomLeft.GetY() + topRight.GetY()) / 2);
 		}
 		public ReflectedLine TestForCollision(Common.LineSegment path) {
 			Angle returnAngle = null;
