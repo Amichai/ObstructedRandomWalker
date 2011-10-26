@@ -24,10 +24,27 @@ namespace Walker {
 			List<IObstruction> obstructions = new List<IObstruction>();
 			System.Drawing.Size Size = new System.Drawing.Size(Width, Height);
 			System.Drawing.Point startingPoint = new System.Drawing.Point(Size.Width / 2, Size.Height / 2);
-			obstructions.Add(new Walls(new Vector(0, 0), new Vector(Width, Height)));
+			
 			foreach (Vector p in getCenterPointsAsLattice(new Size(Width, Height))) {
 				//obstructions.Add(new Ellipse(p, getRandomAxis()));
 				obstructions.Add(new Ellipse(p, AxisMin, AxisMax));
+				Vector newP = null;
+				if (p.GetX() - AxisMin < 0) {
+					newP = new Vector(p.GetX() + Map.Width, p.GetY());
+					obstructions.Add(new Ellipse(newP, AxisMin, AxisMax));
+				}
+				if (p.GetX() + AxisMin > Map.Width) {
+					newP = new Vector(p.GetX() - Map.Width, p.GetY());
+					obstructions.Add(new Ellipse(newP, AxisMin, AxisMax));
+				}
+				if (p.GetY() - AxisMax < 0) {
+					newP = new Vector(p.GetX(), p.GetY() + Map.Height);
+					obstructions.Add(new Ellipse(newP, AxisMin, AxisMax));
+				}
+				if (p.GetY() + AxisMax > Map.Height) {
+					newP = new Vector(p.GetX(), p.GetY() - Map.Height);
+					obstructions.Add(new Ellipse(newP, AxisMin, AxisMax));
+				}
 			}
 			
 			return new Map(obstructions, Size, startingPoint);
@@ -47,7 +64,7 @@ namespace Walker {
 		public static IEnumerable<Vector> getCenterPointsAsLattice(Size mapSize) {
 			int xIncrement = 30, yIncrement = 30;
 			for(int i=0;i < mapSize.Width; i+= xIncrement){
-				for (int j = 0; j < mapSize.Height; j+=yIncrement) {
+				for (int j = 0; j < mapSize.Height - yIncrement; j+=yIncrement) {
 					yield return new Vector(i, j);
 				}
 			}

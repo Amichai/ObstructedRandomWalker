@@ -35,7 +35,7 @@ namespace Walker {
 		public static int stepCounter;
 		private int numberOfSteps;
 
-		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 5, int numberOfSteps = 100000) {
+		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 5, int numberOfSteps = 550000) {
 			this.numberOfSteps = numberOfSteps;
 			startingPosition = CurrentPosition;
 			if (startingPosition == null) {
@@ -56,26 +56,63 @@ namespace Walker {
 		int horizBoardIdx = 0,
 			vertBoardIdx = 0;
 
-		private Rectangle getRectangleForCentersToCheck(LineSegment path) {
-			int leftEdge = (int)path.EndingPos.GetX() - Map.AxisMax;
-			if (leftEdge < 0)
-				leftEdge += Map.Width;
-			int topEdge = (int)path.EndingPos.GetY() - Map.AxisMax;
-			if (topEdge < 0)
-				topEdge += Map.Height;
-			int width = Map.AxisMax * 2;
-			if (width + leftEdge > Map.Width)
-			{}
-			int height = Map.AxisMax * 2;
-			if(height + topEdge > Map.Height)
-			{}
-			return new Rectangle(leftEdge, topEdge, height, width);
-			//TODO: This code is buggy/not working and must be fixed!! The bounding rectangle of centers should wrap around the borders!!!!
+		private List<Rectangle> getRectangleForCentersToCheck(LineSegment path) {
+			var Rectangles = new List<Rectangle>();
+			int width1 = Map.AxisMax * 2;
+			int height1 = Map.AxisMax * 2;
+			int leftEdge = (int)path.EndingPos.GetX() - Map.AxisMax ;
+			int topEdge = (Map.Height - (int)path.EndingPos.GetY()) - Map.AxisMax ;
+			int width2 = int.MinValue, height2 = int.MinValue;
+			int wrappedLeftEdge = int.MaxValue, wrappedTopEdge = int.MaxValue, 
+				maxWidth = int.MaxValue, maxHeight = int.MaxValue;
+			if (leftEdge < 0) {
+				wrappedLeftEdge = leftEdge + Map.Width;
+				width1 = Math.Abs(leftEdge);
+				width2 = Map.AxisMax * 2 - width1;
+				maxWidth = Math.Max(width1, width2);
+			} else maxWidth = width1;
+			if (topEdge < 0) {
+				wrappedTopEdge = topEdge + Map.Height;
+				height1 = Math.Abs(topEdge);
+				height2 = Map.AxisMax * 2 - height1;
+				maxHeight = Math.Max(height1, height2);
+			} else maxHeight = height1;
+			//TODO: Optimize this code to find the correct rectangular areas
+			if (width2 == int.MinValue && height2 == int.MinValue) {
+				Rectangles.Add(new Rectangle(leftEdge, topEdge, width1, height1));
+				return Rectangles;
+			}
+			if (width2 != int.MinValue && height2 != int.MinValue) {
+				Rectangles.Add(new Rectangle(0, 0, maxWidth, maxHeight));
+				Rectangles.Add(new Rectangle(0, topEdge, maxWidth, maxHeight));
+				Rectangles.Add(new Rectangle(leftEdge, 0, maxWidth, maxHeight));
+				Rectangles.Add(new Rectangle(leftEdge, topEdge, maxWidth, maxHeight));
+				return Rectangles;
+			}
+			if (width2 != int.MinValue) {
+				Rectangles.Add(new Rectangle(0, topEdge, maxWidth, maxHeight));
+				Rectangles.Add(new Rectangle(wrappedLeftEdge, topEdge, maxWidth, maxHeight));
+				return Rectangles;
+			}
+			if (height2 != int.MinValue) {
+				Rectangles.Add(new Rectangle(leftEdge, 0, maxWidth, maxHeight));
+				Rectangles.Add(new Rectangle(leftEdge, wrappedTopEdge, maxWidth, maxHeight));
+				return Rectangles;
+			}
+			throw new Exception();
+		}
+
+		private void printRectanglesToBoard(List<Rectangle> rects, LineSegment path) {
+			var pen = new Pen(Color.Purple, 2);
+			g.DrawRectangles(pen, rects.ToArray());
+			Debug.Print(path.ToString());
 		}
 
 		private void testForCollisionAndAdd(LineSegment path) {
 			ReflectedLine reflectedLine = null;
-			Rectangle rectOfCentersToCheck = getRectangleForCentersToCheck(path);
+			List<Rectangle> rectOfCentersToCheck = getRectangleForCentersToCheck(path.reflectOverHorizontalMidLine(Map.Height));
+			//if(rectOfCentersToCheck.Count > 1)
+			//    printRectanglesToBoard(rectOfCentersToCheck, path.reflectOverHorizontalMidLine(Map.Height));
 			foreach (IObstruction obst in obstructions.Where(i => rectOfCentersToCheck.ContainsPoint(i.CenterPoint))) {
 				reflectedLine = obst.TestForCollision(path);
 				if (reflectedLine != null && reflectedLine.ReturnAngle != null && stepCounter < numberOfSteps) {
@@ -119,7 +156,7 @@ namespace Walker {
 			stepCounter++;
 			if (color == null)
 				color = Color.Brown;
-			printToBoard(path, color);
+			printToBoard(path.reflectOverHorizontalMidLine(Map.Height), color);
 			fullPath.Add(path);
 			var newEndPt = checkForPassedWalls(path);
 			if (newEndPt == null)
@@ -135,10 +172,13 @@ namespace Walker {
 	}
 
 	public static class RectangleExtensionMethods{
-		public static bool ContainsPoint(this Rectangle rect, Vector point) {
-			if (point.GetX() < rect.X || point.GetX() > rect.Right || point.GetY() < rect.Top || point.GetY() > rect.Bottom)
-				return false;
-			else return true;
+		public static bool ContainsPoint(this List<Rectangle> rects, Vector point) {
+			foreach (Rectangle rect in rects) {
+				if (point.GetX() >= rect.X && point.GetX() <= rect.Right && point.GetY() >= rect.Top && point.GetY() <= rect.Bottom) {
+					return true;
+				}
+			}
+			return false;
 		}
 	}
 }

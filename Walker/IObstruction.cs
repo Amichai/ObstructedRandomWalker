@@ -33,6 +33,7 @@ namespace Walker {
 			BoundingRectangle = Geometry.Bounds;
 			CenterPoint = centerPt;
 		}
+
 		public bool DrawMe {get; set;}
 		public System.Windows.Rect BoundingRectangle { get; set; }
 
@@ -72,41 +73,6 @@ namespace Walker {
 				throw new Exception();
 			}
 			return null;
-		}
-	}
-
-	public class Walls : IObstruction {
-		public Geometry Geometry { get; set; }
-		public bool DrawMe { get; set; }
-		public System.Windows.Rect BoundingRectangle { get; set; }
-		public Vector CenterPoint { get; set; }
-
-		public Walls(Vector bottomLeft, Vector topRight) {
-			DrawMe = false;
-			BoundingRectangle = new System.Windows.Rect(bottomLeft.GetX(), bottomLeft.GetY(), topRight.GetX(), topRight.GetY());
-			Geometry = new LineGeometry();
-			CenterPoint = new Vector((bottomLeft.GetX() + topRight.GetX()) / 2, (bottomLeft.GetY() + topRight.GetY()) / 2);
-		}
-		public ReflectedLine TestForCollision(Common.LineSegment path) {
-			Angle returnAngle = null;
-			if (path.Angle().InRadians() == 0)
-				throw new Exception("This should never happen!");
-
-			if ((path.EndingPos.GetX() <= BoundingRectangle.Left && path.EndingPos.GetY() <= BoundingRectangle.Y)
-			|| (path.EndingPos.GetX() >= BoundingRectangle.Right && path.EndingPos.GetY() >= BoundingRectangle.Bottom)
-				|| (path.EndingPos.GetX() <= BoundingRectangle.Left && path.EndingPos.GetY() >= BoundingRectangle.Bottom)
-				|| (path.EndingPos.GetX() >= BoundingRectangle.Right && path.EndingPos.GetY() <= BoundingRectangle.Y)) {
-				returnAngle = new Angle(-path.YComponent(), -path.XComponent());
-			} else {
-				if (path.EndingPos.GetX() <= BoundingRectangle.Left || path.EndingPos.GetX() >= BoundingRectangle.Right) {
-					returnAngle = new Angle(path.YComponent(), -path.XComponent());
-				}
-				if (path.EndingPos.GetY() <= BoundingRectangle.Y || path.EndingPos.GetY() >= BoundingRectangle.Bottom) {
-					returnAngle = new Angle(-path.YComponent(), path.XComponent());
-				}
-			}
-			return new ReflectedLine(returnAngle);
-
 		}
 	}
 }
