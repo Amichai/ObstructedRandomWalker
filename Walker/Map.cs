@@ -7,13 +7,13 @@ using System.Drawing;
 
 namespace Walker {
 	public class Map {
-		public Map(IEnumerable<IObstruction> obstructions, System.Drawing.Size size, System.Drawing.Point startingPoint) {
+		public Map(IEnumerable<Ellipse> obstructions, System.Drawing.Size size, System.Drawing.Point startingPoint) {
 			this.Obstructions = obstructions;
 			this.Size = size;
 			this.StartingPoint = startingPoint;
 		}
 
-		public IEnumerable<IObstruction> Obstructions { get; set; }
+		public IEnumerable<Ellipse> Obstructions { get; set; }
 
 		public System.Drawing.Point StartingPoint { get; set; }
 
@@ -21,7 +21,7 @@ namespace Walker {
 		static Random random = new Random();
 
 		internal static Map MapBuilder() {
-			List<IObstruction> obstructions = new List<IObstruction>();
+			List<Ellipse> obstructions = new List<Ellipse>();
 			System.Drawing.Size Size = new System.Drawing.Size(Width, Height);
 			System.Drawing.Point startingPoint = new System.Drawing.Point(Size.Width / 2, Size.Height / 2);
 			

@@ -13,7 +13,7 @@ namespace Walker {
 		private Graphics g;
 		Rectangle boardBounds;
 		Random random = new Random();
-		IEnumerable<IObstruction> obstructions;
+		IEnumerable<Ellipse> obstructions;
 		public static System.Drawing.Image PathImage { get; set; }
 
 		public RandomWalker(Map map, WalkerForm walkerForm) {
@@ -113,7 +113,7 @@ namespace Walker {
 			List<Rectangle> rectOfCentersToCheck = getRectangleForCentersToCheck(path.reflectOverHorizontalMidLine(Map.Height));
 			//if(rectOfCentersToCheck.Count > 1)
 			//    printRectanglesToBoard(rectOfCentersToCheck, path.reflectOverHorizontalMidLine(Map.Height));
-			foreach (IObstruction obst in obstructions.Where(i => rectOfCentersToCheck.ContainsPoint(i.CenterPoint))) {
+			foreach (Ellipse obst in obstructions.Where(i => rectOfCentersToCheck.ContainsPoint(i.CenterPoint))) {
 				reflectedLine = obst.TestForCollision(path);
 				if (reflectedLine != null && reflectedLine.ReturnAngle != null && stepCounter < numberOfSteps) {
 					if (!reflectedLine.PassedEscapedFromEllipseTest(obst.Geometry, path)) {
