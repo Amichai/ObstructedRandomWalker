@@ -49,6 +49,7 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Heatmap.cs" />
     <Compile Include="ReflectedAngle.cs" />
     <Compile Include="WalkerForm.cs">
       <SubType>Form</SubType>
