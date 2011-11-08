@@ -22,6 +22,10 @@ namespace Walker {
 			walker.InitiateRandomWalk(new Vector(map.Size.Width / 2, map.Size.Height / 2));
 		
 		}
+		private void Print_Click(object sender, EventArgs e) {
+			Heatmap heatMap = new Heatmap(walker.GetPathData(), 10, 100);
+			heatMap.Print();
+		}
 
 		private void Walk_Click(object sender, EventArgs e) {
 			InitializeComponent(mapSize);

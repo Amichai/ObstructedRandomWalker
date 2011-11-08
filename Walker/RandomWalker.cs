@@ -35,7 +35,7 @@ namespace Walker {
 		public static int stepCounter;
 		private int numberOfSteps;
 
-		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 5, int numberOfSteps = 550000) {
+		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 2, int numberOfSteps = 100000) {
 			this.numberOfSteps = numberOfSteps;
 			startingPosition = CurrentPosition;
 			if (startingPosition == null) {
@@ -168,6 +168,10 @@ namespace Walker {
 			Point startingPoint = new Point((int)path.StartingPos.GetX(), boardBounds.Height - (int)path.StartingPos.GetY());
 			Point endingPoint = new Point((int)path.EndingPos.GetX(), boardBounds.Height - (int)path.EndingPos.GetY());
 			g.DrawLine(new System.Drawing.Pen(color, 1f), startingPoint, endingPoint);
+		}
+
+		internal List<LineSegment> GetPathData() {
+			return fullPath;
 		}
 	}
 

@@ -30,6 +30,7 @@ namespace Walker {
 			this.mapDisplay = new MapDisplay();
 			this.Walk = new System.Windows.Forms.Button();
 			this.Reset = new System.Windows.Forms.Button();
+			this.Print = new System.Windows.Forms.Button();
 			//
 			// mapDisplay
 			// 
@@ -59,6 +60,17 @@ namespace Walker {
 			this.Reset.Text = "Reset";
 			this.Reset.UseVisualStyleBackColor = true;
 			this.Reset.Click += new System.EventHandler(this.Reset_Click);
+			//
+			// Print
+			//
+			this.Print.Location = new System.Drawing.Point(825, 40);
+			this.Print.Name = "Print";
+			this.Print.Size = new System.Drawing.Size(75, 23);
+			this.Print.TabIndex = 4;
+			this.Print.Text = "Print";
+			this.Print.UseVisualStyleBackColor = true;
+			this.Print.Click += new System.EventHandler(this.Print_Click);
+
 			// 
 			// WalkEnviornment
 			// 
@@ -67,6 +79,7 @@ namespace Walker {
 			this.ClientSize = mapSize;
 			this.Controls.Add(this.Walk);
 			this.Controls.Add(this.Reset);
+			this.Controls.Add(this.Print);
 			this.Controls.Add(this.mapDisplay);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Name = "WalkEnviornment";
@@ -84,6 +97,7 @@ namespace Walker {
 		private MapDisplay mapDisplay;
 		private System.Windows.Forms.Button Walk;
 		private System.Windows.Forms.Button Reset;
+		private System.Windows.Forms.Button Print;
 	}
 }
 
