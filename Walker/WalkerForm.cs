@@ -13,7 +13,6 @@ namespace Walker {
 		RandomWalker walker;
 		Size mapSize;
 		Map map;
-		Heatmap heatmap;
 		public WalkerForm(Map map) {
 			this.map = map;
 			mapSize = map.Size;
@@ -21,12 +20,11 @@ namespace Walker {
 			this.mapDisplay.map = map;
 			walker = new RandomWalker(map, this);
 			walker.InitiateRandomWalk(new Vector(map.Size.Width / 2, map.Size.Height / 2));
-			heatmap = new Heatmap(walker.GetPathData(), 7, 70, 2);
 		
 		}
 		private void Print_Click(object sender, EventArgs e) {
-			Heatmap heatMap = new Heatmap(walker.GetPathData(), 7, 70, 2);
-			heatmap.BuildHeatMap();
+			Heatmap heatMap = new Heatmap(walker.GetPathData(), 6, 70, 2);
+			heatMap.BuildHeatMap();
 			heatMap.Print();
 		}
 
