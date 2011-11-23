@@ -35,7 +35,7 @@ namespace Walker {
 		public static int stepCounter;
 		private int numberOfSteps;
 
-		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 2, int numberOfSteps = 100000) {
+		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 5, int numberOfSteps = 100000) {
 			this.numberOfSteps = numberOfSteps;
 			startingPosition = CurrentPosition;
 			if (startingPosition == null) {

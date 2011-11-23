@@ -62,9 +62,9 @@ namespace Walker {
 		public const int AxisMin = 10, AxisMax = 10;
 
 		public static IEnumerable<Vector> getCenterPointsAsLattice(Size mapSize) {
-			int xIncrement = 30, yIncrement = 30;
+			int xIncrement = 20, yIncrement = 20;
 			for(int i=0;i < mapSize.Width; i+= xIncrement){
-				for (int j = 0; j < mapSize.Height - yIncrement; j+=yIncrement) {
+				for (int j = 0; j < mapSize.Height; j+=yIncrement) {
 					yield return new Vector(i, j);
 				}
 			}
