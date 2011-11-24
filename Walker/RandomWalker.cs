@@ -35,7 +35,7 @@ namespace Walker {
 		public static int stepCounter;
 		private int numberOfSteps;
 
-		internal void InitiateRandomWalk(Vector startingPosition = null, double stepSize = 5, int numberOfSteps = 100000) {
+		internal IEnumerable<StatusReport> InitiateRandomWalk(Vector startingPosition = null, double stepSize = 5, int numberOfSteps = 10000) {
 			this.numberOfSteps = numberOfSteps;
 			startingPosition = CurrentPosition;
 			if (startingPosition == null) {
@@ -50,6 +50,10 @@ namespace Walker {
 				LineSegment newPath = new LineSegment(CurrentPosition, endingPosition);
 				pathWalker(newPath, Color.Blue);
 				testForCollisionAndAdd(newPath);
+				//Be advised: it's possible that more than one step is taken in the case of a collision
+				//which result in incomplete progress reporting to the UI and heatmap.
+				int progressValue = (int)Math.Floor(((double)stepCounter / (double)numberOfSteps) * 100);
+				yield return new StatusReport(progressValue, newPath);
 			}
 		}
 
@@ -60,7 +64,7 @@ namespace Walker {
 			var Rectangles = new List<Rectangle>();
 			int width1 = Map.AxisMax * 2;
 			int height1 = Map.AxisMax * 2;
-			int leftEdge = (int)path.EndingPos.GetX() - Map.AxisMax ;
+			int leftEdge = (int)path.EndingPos.GetX() - Map.AxisMax;
 			int topEdge = (Map.Height - (int)path.EndingPos.GetY()) - Map.AxisMax ;
 			int width2 = int.MinValue, height2 = int.MinValue;
 			int wrappedLeftEdge = int.MaxValue, wrappedTopEdge = int.MaxValue, 

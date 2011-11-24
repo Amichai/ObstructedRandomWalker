@@ -11,6 +11,7 @@ using Common;
 namespace Walker {
 	public partial class WalkerForm : Form {
 		RandomWalker walker;
+		Heatmap heatMap = new Heatmap();
 		Size mapSize;
 		Map map;
 		public WalkerForm(Map map) {
@@ -19,18 +20,23 @@ namespace Walker {
 			InitializeComponent(mapSize);
 			this.mapDisplay.map = map;
 			walker = new RandomWalker(map, this);
-			walker.InitiateRandomWalk(new Vector(map.Size.Width / 2, map.Size.Height / 2));
-		
+			var startingPt = new Vector(map.Size.Width / 2, map.Size.Height / 2);
+			walk(startingPt);	
 		}
+		private void walk(Vector startingPt, int stepSize = 5, int stepsToTake = 10000) {
+			
+			foreach (var status in walker.InitiateRandomWalk(startingPt, stepSize, stepsToTake)) {
+				heatMap.AddPath((LineSegment)status.LastStep);
+			}
+		}
+
 		private void Print_Click(object sender, EventArgs e) {
-			Heatmap heatMap = new Heatmap(walker.GetPathData(), 6, 70, 2);
-			heatMap.BuildHeatMap();
 			heatMap.Print();
 		}
 
 		private void Walk_Click(object sender, EventArgs e) {
 			InitializeComponent(mapSize);
-			walker.InitiateRandomWalk(walker.CurrentPosition);
+			walk(walker.CurrentPosition);
 		}
 
 		private void Reset_Click(object sender, EventArgs e) {

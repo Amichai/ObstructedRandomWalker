@@ -56,7 +56,7 @@ namespace Walker {
 			this.Reset.Location = new System.Drawing.Point(825, 13);
 			this.Reset.Name = "Reset";
 			this.Reset.Size = new System.Drawing.Size(75, 23);
-			this.Reset.TabIndex = 4;
+			this.Reset.TabIndex = 5;
 			this.Reset.Text = "Reset";
 			this.Reset.UseVisualStyleBackColor = true;
 			this.Reset.Click += new System.EventHandler(this.Reset_Click);
@@ -66,11 +66,10 @@ namespace Walker {
 			this.Print.Location = new System.Drawing.Point(825, 40);
 			this.Print.Name = "Print";
 			this.Print.Size = new System.Drawing.Size(75, 23);
-			this.Print.TabIndex = 4;
+			this.Print.TabIndex = 6;
 			this.Print.Text = "Print";
 			this.Print.UseVisualStyleBackColor = true;
 			this.Print.Click += new System.EventHandler(this.Print_Click);
-
 			// 
 			// WalkEnviornment
 			// 
