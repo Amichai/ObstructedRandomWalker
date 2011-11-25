@@ -8,17 +8,10 @@ using System.Diagnostics;
 
 namespace Walker {
 	class RandomWalker {
-		private Map map;
-		private WalkerForm walkerForm;
-		private Graphics g;
 		Rectangle boardBounds;
 		Random random = new Random();
 		IEnumerable<Ellipse> obstructions;
-		public static System.Drawing.Image PathImage { get; set; }
-
 		public RandomWalker(Map map, WalkerForm walkerForm) {
-			PathImage = new Bitmap(map.Size.Width, map.Size.Height);
-			g = Graphics.FromImage(PathImage);
 			boardBounds = new Rectangle(0, 0, map.Size.Width, map.Size.Height);
 			obstructions = map.Obstructions;
 		}
@@ -49,11 +42,15 @@ namespace Walker {
 				endingPosition = new Vector(x2, y2);
 				LineSegment newPath = new LineSegment(CurrentPosition, endingPosition);
 				pathWalker(newPath, Color.Blue);
-				testForCollisionAndAdd(newPath);
-				//Be advised: it's possible that more than one step is taken in the case of a collision
-				//which result in incomplete progress reporting to the UI and heatmap.
+
 				int progressValue = (int)Math.Floor(((double)stepCounter / (double)numberOfSteps) * 100);
 				yield return new StatusReport(progressValue, newPath);
+
+				newPath = testForCollision(newPath);
+				while (newPath != null)	{
+					yield return new StatusReport(progressValue, newPath, "collision");
+					newPath = testForCollision(newPath);
+				} 
 			}
 		}
 
@@ -106,13 +103,7 @@ namespace Walker {
 			throw new Exception();
 		}
 
-		private void printRectanglesToBoard(List<Rectangle> rects, LineSegment path) {
-			var pen = new Pen(Color.Purple, 2);
-			g.DrawRectangles(pen, rects.ToArray());
-			Debug.Print(path.ToString());
-		}
-
-		private void testForCollisionAndAdd(LineSegment path) {
+		private LineSegment testForCollision(LineSegment path) {
 			ReflectedLine reflectedLine = null;
 			List<Rectangle> rectOfCentersToCheck = getRectangleForCentersToCheck(path.reflectOverHorizontalMidLine(Map.Height));
 			//if(rectOfCentersToCheck.Count > 1)
@@ -121,16 +112,18 @@ namespace Walker {
 				reflectedLine = obst.TestForCollision(path);
 				if (reflectedLine != null && reflectedLine.ReturnAngle != null && stepCounter < numberOfSteps) {
 					if (!reflectedLine.PassedEscapedFromEllipseTest(obst.Geometry, path)) {
-						//This means we didn't get away
-						//Print relevant error data!!
-						pathWalker(reflectedLine.GetReturnLine(path), Color.Green);
+						//This means we didn't get away. Print relevant error data
+						throw new Exception("Didn't get away");
+						//pathWalker(reflectedLine.GetReturnLine(path), Color.Green);
 						//stepCounter = numberOfSteps;
 					} else {
 						pathWalker(reflectedLine.GetReturnLine(path), Color.Red);
-						testForCollisionAndAdd(reflectedLine.GetReturnLine(path));
+						//testForCollision(reflectedLine.GetReturnLine(path));
+						return reflectedLine.GetReturnLine(path);
 					}
 				}
 			}
+			return null;
 		}
 
 		List<LineSegment> fullPath = new List<LineSegment>();
@@ -168,10 +161,11 @@ namespace Walker {
 			else CurrentPosition = newEndPt;
 		}
 
+		//TODO: This method has no reason to exist.
 		private void printToBoard(LineSegment path, Color color) {
 			Point startingPoint = new Point((int)path.StartingPos.GetX(), boardBounds.Height - (int)path.StartingPos.GetY());
 			Point endingPoint = new Point((int)path.EndingPos.GetX(), boardBounds.Height - (int)path.EndingPos.GetY());
-			g.DrawLine(new System.Drawing.Pen(color, 1f), startingPoint, endingPoint);
+			//g.DrawLine(new System.Drawing.Pen(color, 1f), startingPoint, endingPoint);
 		}
 
 		internal List<LineSegment> GetPathData() {

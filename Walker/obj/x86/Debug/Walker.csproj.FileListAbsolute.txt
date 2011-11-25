@@ -11,3 +11,6 @@ C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\D
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\Oyster.IntX.dll
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\Oyster.IntX.xml
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x86\Debug\Walker.WalkerForm.resources
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\SLaks.Progression.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\SLaks.Progression.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\SLaks.Progression.xml

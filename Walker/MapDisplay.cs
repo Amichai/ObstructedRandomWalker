@@ -56,8 +56,8 @@ namespace Walker {
 			}
 
 			base.OnPaint(pe);
-			if (RandomWalker.PathImage != null) {
-				pe.Graphics.DrawImage(RandomWalker.PathImage, new Point(0, 0));
+			if (WalkerForm.PathImage != null) {
+				pe.Graphics.DrawImage(WalkerForm.PathImage, new Point(0, 0));
 			}
 			pe.Graphics.FillEllipse(Brushes.Red, new Rectangle(map.StartingPoint, new Size(4, 4)));
 		}

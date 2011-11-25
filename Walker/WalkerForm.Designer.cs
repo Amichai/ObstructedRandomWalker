@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.ComponentModel;
 namespace Walker {
 	partial class WalkerForm {
 		/// <summary>
@@ -70,6 +71,7 @@ namespace Walker {
 			this.Print.Text = "Print";
 			this.Print.UseVisualStyleBackColor = true;
 			this.Print.Click += new System.EventHandler(this.Print_Click);
+
 			// 
 			// WalkEnviornment
 			// 
