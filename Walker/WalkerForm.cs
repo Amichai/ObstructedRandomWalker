@@ -39,11 +39,12 @@ namespace Walker {
 
 		private void walk(Vector startingPt, int stepSize = 5, int stepsToTake = 10000) {
 			foreach (var status in walker.InitiateRandomWalk(startingPt, stepSize, stepsToTake)) {
+				LineSegment step = (LineSegment)status.LastStep;
 				if(status.Tags.Contains("collision"))
-					drawLine(new Pen(Color.Red, 1f), (LineSegment)status.LastStep);
+					drawLine(new Pen(Color.Red, 1f), step);
 				else
-					drawLine(new Pen(Color.Blue, 1f), (LineSegment)status.LastStep);
-				heatMap.AddPath((LineSegment)status.LastStep);
+					drawLine(new Pen(Color.Blue, 1f), step);
+				heatMap.AddPath(step);
 			}
 		}
 

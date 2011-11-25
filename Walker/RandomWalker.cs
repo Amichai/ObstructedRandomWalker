@@ -41,13 +41,14 @@ namespace Walker {
 				double y2 = CurrentPosition.GetY() + stepSize * Math.Sin(angleToWalk);
 				endingPosition = new Vector(x2, y2);
 				LineSegment newPath = new LineSegment(CurrentPosition, endingPosition);
-				pathWalker(newPath, Color.Blue);
+				pathWalker(newPath);
 
 				int progressValue = (int)Math.Floor(((double)stepCounter / (double)numberOfSteps) * 100);
 				yield return new StatusReport(progressValue, newPath);
 
 				newPath = testForCollision(newPath);
 				while (newPath != null)	{
+					pathWalker(newPath);
 					yield return new StatusReport(progressValue, newPath, "collision");
 					newPath = testForCollision(newPath);
 				} 
@@ -106,19 +107,15 @@ namespace Walker {
 		private LineSegment testForCollision(LineSegment path) {
 			ReflectedLine reflectedLine = null;
 			List<Rectangle> rectOfCentersToCheck = getRectangleForCentersToCheck(path.reflectOverHorizontalMidLine(Map.Height));
-			//if(rectOfCentersToCheck.Count > 1)
-			//    printRectanglesToBoard(rectOfCentersToCheck, path.reflectOverHorizontalMidLine(Map.Height));
 			foreach (Ellipse obst in obstructions.Where(i => rectOfCentersToCheck.ContainsPoint(i.CenterPoint))) {
 				reflectedLine = obst.TestForCollision(path);
 				if (reflectedLine != null && reflectedLine.ReturnAngle != null && stepCounter < numberOfSteps) {
 					if (!reflectedLine.PassedEscapedFromEllipseTest(obst.Geometry, path)) {
 						//This means we didn't get away. Print relevant error data
-						throw new Exception("Didn't get away");
+						//throw new Exception("Didn't get away");
 						//pathWalker(reflectedLine.GetReturnLine(path), Color.Green);
 						//stepCounter = numberOfSteps;
 					} else {
-						pathWalker(reflectedLine.GetReturnLine(path), Color.Red);
-						//testForCollision(reflectedLine.GetReturnLine(path));
 						return reflectedLine.GetReturnLine(path);
 					}
 				}
@@ -149,23 +146,13 @@ namespace Walker {
 			return newEndPoint;
 		}
 
-		private void pathWalker(LineSegment path, Color color) {
+		private void pathWalker(LineSegment path) {
 			stepCounter++;
-			if (color == null)
-				color = Color.Brown;
-			printToBoard(path.reflectOverHorizontalMidLine(Map.Height), color);
 			fullPath.Add(path);
 			var newEndPt = checkForPassedWalls(path);
 			if (newEndPt == null)
 				CurrentPosition = path.EndingPos;
 			else CurrentPosition = newEndPt;
-		}
-
-		//TODO: This method has no reason to exist.
-		private void printToBoard(LineSegment path, Color color) {
-			Point startingPoint = new Point((int)path.StartingPos.GetX(), boardBounds.Height - (int)path.StartingPos.GetY());
-			Point endingPoint = new Point((int)path.EndingPos.GetX(), boardBounds.Height - (int)path.EndingPos.GetY());
-			//g.DrawLine(new System.Drawing.Pen(color, 1f), startingPoint, endingPoint);
 		}
 
 		internal List<LineSegment> GetPathData() {
