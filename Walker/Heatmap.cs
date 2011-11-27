@@ -13,7 +13,7 @@ namespace Walker {
 		List<LineSegment> pathData =null; 
 		ThreeDimArray threeDArray;
 		int numberOfStepsToCompute, boardSize, precisionCoef;
-		public Heatmap(List<LineSegment> pathData, int stepsToComp =6, int boardSize = 70, int precisionCoef = 2){
+		public Heatmap(List<LineSegment> pathData, int stepsToComp =9, int boardSize = 70, int precisionCoef = 2){
 			this.pathData = pathData;
 			this.numberOfStepsToCompute = stepsToComp;
 			this.boardSize = boardSize;
@@ -22,7 +22,7 @@ namespace Walker {
 			rollingCache = new LinkedList<LineSegment>();
 		}
 
-		public Heatmap(int stepsToComp = 6, int boardSize = 70, int precisionCoef = 2) {
+		public Heatmap(int stepsToComp = 9, int boardSize = 70, int precisionCoef = 2) {
 			this.numberOfStepsToCompute = stepsToComp;
 			this.boardSize = boardSize;
 			this.threeDArray = new ThreeDimArray(numberOfStepsToCompute, boardSize);
@@ -35,7 +35,7 @@ namespace Walker {
 		public void AddPath(LineSegment path) {
 			if (rollingCache.Count() == numberOfStepsToCompute) {
 				for (int i = 1; i < numberOfStepsToCompute; i++) {
-					incrementHeatMapValues(rollingCache.First() ,rollingCache.ElementAt(i), i);
+					incrementHeatMapValues(rollingCache.First(), rollingCache.ElementAt(i), i - 1);
 				}
 				rollingCache.RemoveFirst();
 			}
@@ -52,7 +52,7 @@ namespace Walker {
 
 
 		//Handle all path data at once
-		//Implement schabse's reporter class
+		//Implement Schabse's reporter class
 		public void BuildHeatMap(){
 			for (int i = 0; i < pathData.Count() - numberOfStepsToCompute; i++) {
 				var startLine = pathData[i];
@@ -62,6 +62,7 @@ namespace Walker {
 				}
 			}
 		}
+
 		public void Print() {
 			threeDArray.SaveToDisk();
 		}

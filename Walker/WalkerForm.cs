@@ -16,7 +16,8 @@ namespace Walker {
 		Size mapSize;
 		Map map;
 		private Graphics g;
-		public static System.Drawing.Image PathImage { get; set; }
+		public static Image PathImage { get; set; }
+
 		public WalkerForm(Map map) {
 			PathImage = new Bitmap(map.Size.Width, map.Size.Height);
 			g = Graphics.FromImage(PathImage);

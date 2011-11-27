@@ -1,0 +1,8 @@
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreadingTest\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreadingTest\obj\x86\Debug\ThreadingTest.Properties.Resources.resources
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreadingTest\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreadingTest\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreadingTest\bin\Debug\ThreadingTest.exe
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreadingTest\bin\Debug\ThreadingTest.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreadingTest\obj\x86\Debug\ThreadingTest.exe
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreadingTest\obj\x86\Debug\ThreadingTest.pdb
