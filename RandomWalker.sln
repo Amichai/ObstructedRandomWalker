@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SLaks.Progression", "..\Pro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadingTest", "ThreadingTest\ThreadingTest.csproj", "{6487ED85-069D-47F6-8A39-ECECBD83B233}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageConvert", "ImageConvert\ImageConvert.csproj", "{9A9BFE4F-B623-493B-948F-C5EE339AB054}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = RandomWalker.vsmdi
@@ -69,6 +71,16 @@ Global
 		{6487ED85-069D-47F6-8A39-ECECBD83B233}.Release|Mixed Platforms.Build.0 = Release|x86
 		{6487ED85-069D-47F6-8A39-ECECBD83B233}.Release|x86.ActiveCfg = Release|x86
 		{6487ED85-069D-47F6-8A39-ECECBD83B233}.Release|x86.Build.0 = Release|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Debug|x86.ActiveCfg = Debug|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Debug|x86.Build.0 = Debug|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Release|Any CPU.ActiveCfg = Release|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Release|Mixed Platforms.Build.0 = Release|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Release|x86.ActiveCfg = Release|x86
+		{9A9BFE4F-B623-493B-948F-C5EE339AB054}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

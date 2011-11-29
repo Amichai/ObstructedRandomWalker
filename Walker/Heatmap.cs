@@ -12,18 +12,17 @@ namespace Walker {
 	class Heatmap {
 		List<LineSegment> pathData =null; 
 		ThreeDimArray threeDArray;
-		int numberOfStepsToCompute, boardSize, precisionCoef;
-		public Heatmap(List<LineSegment> pathData, int stepsToComp =9, int boardSize = 70, int precisionCoef = 2){
+		const int numberOfStepsToCompute = 30;
+		int boardSize, precisionCoef;
+		public Heatmap(List<LineSegment> pathData, int boardSize = 70, int precisionCoef = 2){
 			this.pathData = pathData;
-			this.numberOfStepsToCompute = stepsToComp;
 			this.boardSize = boardSize;
 			this.threeDArray = new ThreeDimArray(numberOfStepsToCompute, boardSize);
 			this.precisionCoef = precisionCoef;
 			rollingCache = new LinkedList<LineSegment>();
 		}
 
-		public Heatmap(int stepsToComp = 9, int boardSize = 70, int precisionCoef = 2) {
-			this.numberOfStepsToCompute = stepsToComp;
+		public Heatmap(int boardSize = 70, int precisionCoef = 2) {
 			this.boardSize = boardSize;
 			this.threeDArray = new ThreeDimArray(numberOfStepsToCompute, boardSize);
 			this.precisionCoef = precisionCoef;
@@ -51,8 +50,9 @@ namespace Walker {
 		}
 
 
-		//Handle all path data at once
-		//Implement Schabse's reporter class
+		/// <summary>
+		/// This handle all path data at once. Assumes all path data was passed to the constructor. 
+		/// </summary>
 		public void BuildHeatMap(){
 			for (int i = 0; i < pathData.Count() - numberOfStepsToCompute; i++) {
 				var startLine = pathData[i];

@@ -28,7 +28,7 @@ namespace Walker {
 		public static int stepCounter;
 		private int numberOfSteps;
 
-		internal IEnumerable<StatusReport> InitiateRandomWalk(Vector startingPosition = null, double stepSize = 5, int numberOfSteps = 10000) {
+		internal IEnumerable<StatusReport> InitiateRandomWalk(double stepSize, int numberOfSteps, Vector startingPosition = null) {
 			this.numberOfSteps = numberOfSteps;
 			startingPosition = CurrentPosition;
 			if (startingPosition == null) {
@@ -60,23 +60,23 @@ namespace Walker {
 
 		private List<Rectangle> getRectangleForCentersToCheck(LineSegment path) {
 			var Rectangles = new List<Rectangle>();
-			int width1 = Map.AxisMax * 2;
-			int height1 = Map.AxisMax * 2;
-			int leftEdge = (int)path.EndingPos.GetX() - Map.AxisMax;
-			int topEdge = (Map.Height - (int)path.EndingPos.GetY()) - Map.AxisMax ;
+			int width1 = Map.HorizAxis * 2;
+			int height1 = Map.VertAxis * 2;
+			int leftEdge = (int)path.EndingPos.GetX() - Map.HorizAxis;
+			int topEdge = (Map.Height - (int)path.EndingPos.GetY()) - Map.VertAxis ;
 			int width2 = int.MinValue, height2 = int.MinValue;
 			int wrappedLeftEdge = int.MaxValue, wrappedTopEdge = int.MaxValue, 
 				maxWidth = int.MaxValue, maxHeight = int.MaxValue;
 			if (leftEdge < 0) {
 				wrappedLeftEdge = leftEdge + Map.Width;
 				width1 = Math.Abs(leftEdge);
-				width2 = Map.AxisMax * 2 - width1;
+				width2 = Map.HorizAxis * 2 - width1;
 				maxWidth = Math.Max(width1, width2);
 			} else maxWidth = width1;
 			if (topEdge < 0) {
 				wrappedTopEdge = topEdge + Map.Height;
 				height1 = Math.Abs(topEdge);
-				height2 = Map.AxisMax * 2 - height1;
+				height2 = Map.VertAxis * 2 - height1;
 				maxHeight = Math.Max(height1, height2);
 			} else maxHeight = height1;
 			//TODO: Optimize this code to find the correct rectangular areas
@@ -105,20 +105,9 @@ namespace Walker {
 		}
 
 		private LineSegment testForCollision(LineSegment path) {
-			ReflectedLine reflectedLine = null;
 			List<Rectangle> rectOfCentersToCheck = getRectangleForCentersToCheck(path.reflectOverHorizontalMidLine(Map.Height));
 			foreach (Ellipse obst in obstructions.Where(i => rectOfCentersToCheck.ContainsPoint(i.CenterPoint))) {
-				reflectedLine = obst.TestForCollision(path);
-				if (reflectedLine != null && reflectedLine.ReturnAngle != null && stepCounter < numberOfSteps) {
-					if (!reflectedLine.PassedEscapedFromEllipseTest(obst.Geometry, path)) {
-						//This means we didn't get away. Print relevant error data
-						//throw new Exception("Didn't get away");
-						//pathWalker(reflectedLine.GetReturnLine(path), Color.Green);
-						//stepCounter = numberOfSteps;
-					} else {
-						return reflectedLine.GetReturnLine(path);
-					}
-				}
+				return obst.TestForCollision2(path);
 			}
 			return null;
 		}

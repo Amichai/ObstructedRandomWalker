@@ -27,23 +27,23 @@ namespace Walker {
 			
 			foreach (Vector p in getCenterPointsAsLattice(new Size(Width, Height))) {
 				//obstructions.Add(new Ellipse(p, getRandomAxis()));
-				obstructions.Add(new Ellipse(p, AxisMin, AxisMax));
+				obstructions.Add(new Ellipse(p, HorizAxis, VertAxis));
 				Vector newP = null;
-				if (p.GetX() - AxisMin < 0) {
+				if (p.GetX() - HorizAxis < 0) {
 					newP = new Vector(p.GetX() + Map.Width, p.GetY());
-					obstructions.Add(new Ellipse(newP, AxisMin, AxisMax));
+					obstructions.Add(new Ellipse(newP, HorizAxis, VertAxis));
 				}
-				if (p.GetX() + AxisMin > Map.Width) {
+				if (p.GetX() + HorizAxis > Map.Width) {
 					newP = new Vector(p.GetX() - Map.Width, p.GetY());
-					obstructions.Add(new Ellipse(newP, AxisMin, AxisMax));
+					obstructions.Add(new Ellipse(newP, HorizAxis, VertAxis));
 				}
-				if (p.GetY() - AxisMax < 0) {
+				if (p.GetY() - VertAxis < 0) {
 					newP = new Vector(p.GetX(), p.GetY() + Map.Height);
-					obstructions.Add(new Ellipse(newP, AxisMin, AxisMax));
+					obstructions.Add(new Ellipse(newP, HorizAxis, VertAxis));
 				}
-				if (p.GetY() + AxisMax > Map.Height) {
+				if (p.GetY() + VertAxis > Map.Height) {
 					newP = new Vector(p.GetX(), p.GetY() - Map.Height);
-					obstructions.Add(new Ellipse(newP, AxisMin, AxisMax));
+					obstructions.Add(new Ellipse(newP, HorizAxis, VertAxis));
 				}
 			}
 			
@@ -51,15 +51,15 @@ namespace Walker {
 		}
 
 		private static Tuple<int, int> getRandomAxis() {
-			int axis1 = random.Next(AxisMin, AxisMax);
-			int axis2 = random.Next(AxisMin, AxisMax);
+			int axis1 = random.Next(HorizAxis, VertAxis);
+			int axis2 = random.Next(HorizAxis, VertAxis);
 			return new Tuple<int, int>(axis1, axis2 );
 		}
 		#region MapBuilder and Obstruction Properties
 		public const int Width = 900,
 			Height = 700,
 			NumberOfObstructions = 1;
-		public const int AxisMin = 10, AxisMax = 10;
+		public const int HorizAxis = 10, VertAxis = 6;
 
 		public static IEnumerable<Vector> getCenterPointsAsLattice(Size mapSize) {
 			int xIncrement = 20, yIncrement = 20;

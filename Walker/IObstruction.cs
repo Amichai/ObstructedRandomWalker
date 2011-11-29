@@ -59,32 +59,45 @@ namespace Walker {
 			double b = Math.Pow(oneMinusF, 2) * r * Math.Cos(angle) + z * Math.Sin(angle);
 			double c = Math.Pow(oneMinusF, 2) * (Math.Pow(r, 2) - Math.Pow(xRadius, 2)) + Math.Pow(z, 2);
 			b = -2 * b;
-			//TODO: solve the quadratic formula and get two solutions. Use the incoming angle to determine the correct solutions.
-			//Move to the point of collision and reflect from there.
-			double root1 = (-b + Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a);
-			double root2 = (-b - Math.Sqrt(Math.Pow(b, 2) - 4 * a * c)) / (2 * a);
-			var endPt1 = new Vector(startPt.GetX() - root1 * Math.Cos(angle), startPt.GetY() - root1 * Math.Sin(angle));
-			var endPt2 = new Vector(startPt.GetX() - root2 * Math.Cos(angle), startPt.GetY() - root2 * Math.Sin(angle));
-			if (new Common.LineSegment(startPt, endPt1).Slope() == path.Slope()) {
+			double[] roots = new QuadraticEquation(a, b, c).Roots();
+			if (roots == null)
+				throw new Exception("no roots");
+			var endPt1 = new Vector(startPt.GetX() - roots[0] * Math.Cos(angle), startPt.GetY() - roots[0] * Math.Sin(angle));
+			var endPt2 = new Vector(startPt.GetX() - roots[1] * Math.Cos(angle), startPt.GetY() - roots[1] * Math.Sin(angle));
+			if (new Common.LineSegment(startPt, endPt1).Slope().WithinRange(path.Slope(), .005)) {
 				return endPt1;
 			}
-			if (new Common.LineSegment(startPt, endPt1).Slope() == path.Slope()) {
+			if (new Common.LineSegment(startPt, endPt2).Slope().WithinRange(path.Slope(), .005)) {
 				return endPt2;
 			}
 			throw new Exception("No collision pt detected");
 		}
 
-		public ReflectedLine TestForCollision(Common.LineSegment path) {
-			//Built in Ellipse Geometry collision test:
-			//var intersect = Geometry.FillContainsWithDetail(new System.Windows.Media.RectangleGeometry(path.AsSystemRect()));
-			//if(containsPoint(path.EndingPos) != (intersect != System.Windows.Media.IntersectionDetail.Empty))
-			//    throw new Exception();
-			//if (intersect != System.Windows.Media.IntersectionDetail.Empty) {
-
-			//My own collision test method found here: http://www.spaceroots.org/documents/distance/node6.html
-			//My function may not be accurate in some edge cases. I don't know why.
+		public Common.LineSegment TestForCollision2(Common.LineSegment path) {
 			if (containsPoint(path.EndingPos)) {
-				//GetCollisionPoint(path);
+				Vector collisionPt = GetCollisionPoint(path);
+				Angle incidentAngle = path.AngleBetweenPoints(CenterPoint);
+				Angle incidentAngleTimesTwo = incidentAngle * 2;
+				Angle threesixtyMinus = (new Angle(360, true) - incidentAngleTimesTwo);
+
+				Common.LineSegment lineToCenter = new Common.LineSegment(path.EndingPos, CenterPoint);
+				Angle oneEighty = new Angle(180, true);
+				//SEARCH FOR THE RETURN ANGLE:
+				var outLine = computeReturnAngle(oneEighty, path.Angle(), threesixtyMinus, incidentAngle, path);
+				if (outLine != null)
+					return new Common.LineSegment(collisionPt, outLine.GetReturnLine(path).Angle(), path.Magnitude());
+				outLine = computeReturnAngle(oneEighty, path.Angle(), -threesixtyMinus, incidentAngle, path);
+				if (outLine != null)
+					return new Common.LineSegment(collisionPt, outLine.GetReturnLine(path).Angle(), path.Magnitude());
+				throw new Exception();
+			}
+			return null;
+		}
+
+		public ReflectedLine TestForCollision(Common.LineSegment path) {
+			//My own collision test method found here: http://www.spaceroots.org/documents/distance/node6.html
+			if (containsPoint(path.EndingPos)) {
+				Vector collisionPt = GetCollisionPoint(path);
 				Angle incidentAngle = path.AngleBetweenPoints(CenterPoint);
 				Angle incidentAngleTimesTwo = incidentAngle * 2;
 				Angle threesixtyMinus = (new Angle(360, true) - incidentAngleTimesTwo);

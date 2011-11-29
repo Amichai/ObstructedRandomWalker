@@ -5,6 +5,7 @@ using System.Text;
 using Common;
 
 namespace Walker {
+	//Was used for debug functionality. Currently unused.
 	public class ReflectedLine {
 		public Common.Angle ReturnAngle { get; set; }
 

@@ -27,6 +27,7 @@ namespace Walker {
 			this.mapDisplay.map = map;
 			walker = new RandomWalker(map, this);
 			var startingPt = new Vector(map.Size.Width / 2, map.Size.Height / 2);
+
 			walk(startingPt);
 		}
 
@@ -38,8 +39,9 @@ namespace Walker {
 			g.DrawLine(pen, startingPoint, endingPoint);
 		}
 
-		private void walk(Vector startingPt, int stepSize = 5, int stepsToTake = 10000) {
-			foreach (var status in walker.InitiateRandomWalk(startingPt, stepSize, stepsToTake)) {
+
+		private void walk(Vector startingPt, int stepSize = 1, int stepsToTake = 10000) {
+			foreach (var status in walker.InitiateRandomWalk(stepSize, stepsToTake, startingPt)) {
 				LineSegment step = (LineSegment)status.LastStep;
 				if(status.Tags.Contains("collision"))
 					drawLine(new Pen(Color.Red, 1f), step);
