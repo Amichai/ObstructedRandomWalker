@@ -36,22 +36,28 @@ namespace Walker {
 			}
 			Vector endingPosition = null;
 			for (stepCounter = 0; stepCounter < numberOfSteps; stepCounter++) {
-				double angleToWalk = newDirectionGenerator();
-				double x2 = CurrentPosition.GetX() + stepSize * Math.Cos(angleToWalk);
-				double y2 = CurrentPosition.GetY() + stepSize * Math.Sin(angleToWalk);
-				endingPosition = new Vector(x2, y2);
-				LineSegment newPath = new LineSegment(CurrentPosition, endingPosition);
+				LineSegment newPath = null;
+				while (newPath == null){
+					double angleToWalk = newDirectionGenerator();
+					double x2 = CurrentPosition.GetX() + stepSize * Math.Cos(angleToWalk);
+					double y2 = CurrentPosition.GetY() + stepSize * Math.Sin(angleToWalk);
+					endingPosition = new Vector(x2, y2);
+					newPath = new LineSegment(CurrentPosition, endingPosition);
+					if (testForCollision(newPath) != null)
+						newPath = null;
+				}
+
 				pathWalker(newPath);
 
 				int progressValue = (int)Math.Floor(((double)stepCounter / (double)numberOfSteps) * 100);
 				yield return new StatusReport(progressValue, newPath);
 
-				newPath = testForCollision(newPath);
-				while (newPath != null)	{
-					pathWalker(newPath);
-					yield return new StatusReport(progressValue, newPath, "collision");
-					newPath = testForCollision(newPath);
-				} 
+				//newPath = testForCollision(newPath);
+				//while (newPath != null)	{
+				//    pathWalker(newPath);
+				//    yield return new StatusReport(progressValue, newPath, "collision");
+				//    newPath = testForCollision(newPath);
+				//} 
 			}
 		}
 

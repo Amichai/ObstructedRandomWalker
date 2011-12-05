@@ -8,11 +8,17 @@ using System.Text;
 using System.Windows.Forms;
 using Common;
 using SLaks.Progression.Display.WinForms;
+using System.Diagnostics;
 
 namespace Walker {
 	public partial class WalkerForm : Form {
+		const int stepSize = 2;
+		const int stepsToTake = 10000;
+		const int stepsToSaveInHeatMap = 80;
+		const int heatmapBoardSize = 200;
+		int stepsWalked = 0;
 		RandomWalker walker;
-		Heatmap heatMap = new Heatmap();
+		Heatmap heatMap = new Heatmap(stepSize, stepsToSaveInHeatMap, heatmapBoardSize);
 		Size mapSize;
 		Map map;
 		private Graphics g;
@@ -23,11 +29,10 @@ namespace Walker {
 			g = Graphics.FromImage(PathImage);
 			this.map = map;
 			mapSize = map.Size;
-			InitializeComponent(mapSize);
+			InitializeComponent(mapSize, stepSize);
 			this.mapDisplay.map = map;
 			walker = new RandomWalker(map, this);
 			var startingPt = new Vector(map.Size.Width / 2, map.Size.Height / 2);
-
 			walk(startingPt);
 		}
 
@@ -40,7 +45,7 @@ namespace Walker {
 		}
 
 
-		private void walk(Vector startingPt, int stepSize = 1, int stepsToTake = 10000) {
+		private void walk(Vector startingPt) {
 			foreach (var status in walker.InitiateRandomWalk(stepSize, stepsToTake, startingPt)) {
 				LineSegment step = (LineSegment)status.LastStep;
 				if(status.Tags.Contains("collision"))
@@ -48,7 +53,10 @@ namespace Walker {
 				else
 					drawLine(new Pen(Color.Blue, 1f), step);
 				heatMap.AddPath(step);
+				Debug.Print(status.ProgressValue.ToString());
 			}
+			stepsWalked += stepsToTake;
+			mapDisplay.SetTextToPrint("Steps walked: " + stepsWalked + " \nStep size:" + stepSize + "\nSteps being saved in heatmap: " + stepsToSaveInHeatMap);
 		}
 
 		private void Print_Click(object sender, EventArgs e) {
@@ -56,13 +64,13 @@ namespace Walker {
 		}
 
 		private void Walk_Click(object sender, EventArgs e) {
-			InitializeComponent(mapSize);
+			InitializeComponent(mapSize, stepSize);
 			walk(walker.CurrentPosition);
 		}
 
 		private void Reset_Click(object sender, EventArgs e) {
 			walker = new RandomWalker(map, this);
-			InitializeComponent(mapSize);
+			InitializeComponent(mapSize, stepSize);
 		}
 	}
 }

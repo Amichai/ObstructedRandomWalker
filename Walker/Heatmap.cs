@@ -12,19 +12,14 @@ namespace Walker {
 	class Heatmap {
 		List<LineSegment> pathData =null; 
 		ThreeDimArray threeDArray;
-		const int numberOfStepsToCompute = 30;
+		int numberOfStepsToCompute = 60;
 		int boardSize, precisionCoef;
-		public Heatmap(List<LineSegment> pathData, int boardSize = 70, int precisionCoef = 2){
-			this.pathData = pathData;
-			this.boardSize = boardSize;
-			this.threeDArray = new ThreeDimArray(numberOfStepsToCompute, boardSize);
-			this.precisionCoef = precisionCoef;
-			rollingCache = new LinkedList<LineSegment>();
-		}
 
-		public Heatmap(int boardSize = 70, int precisionCoef = 2) {
+		public Heatmap(int stepSize, int stepsToCompute, int boardSize, int precisionCoef = 2, List<LineSegment> pathData = null) {
+			this.pathData = pathData;
+			this.numberOfStepsToCompute = stepsToCompute;
 			this.boardSize = boardSize;
-			this.threeDArray = new ThreeDimArray(numberOfStepsToCompute, boardSize);
+			this.threeDArray = new ThreeDimArray(numberOfStepsToCompute, boardSize, stepSize*precisionCoef);
 			this.precisionCoef = precisionCoef;
 			rollingCache = new LinkedList<LineSegment>();
 		}

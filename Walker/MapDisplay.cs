@@ -36,6 +36,7 @@ namespace Walker {
 			if (Map == null)
 				return;
 		}
+		static string stateToPrint = string.Empty;
 
 		protected override void OnPaint(PaintEventArgs pe) {
 			pe.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -47,10 +48,7 @@ namespace Walker {
 			foreach (Ellipse obstruct in map.Obstructions) {
 				using (var brush = new Pen(Color.FromArgb(0, 0, 0))) {
 					if (obstruct.DrawMe == true) {
-						//Rectangle boundingRect = new Rectangle((int)obstruct.BoundingRectangle.X, Height - (int)obstruct.BoundingRectangle.Y - (int)obstruct.BoundingRectangle.Height,
-						//                            (int)obstruct.BoundingRectangle.Width, (int)obstruct.BoundingRectangle.Height);
 						pe.Graphics.DrawEllipse(brush, new Rectangle((int)obstruct.BoundingRectangle.X, (int)obstruct.BoundingRectangle.Y, (int)obstruct.BoundingRectangle.Width, (int)obstruct.BoundingRectangle.Height));
-						//pe.Graphics.DrawEllipse(brush, boundingRect);
 					}
 				}
 			}
@@ -60,6 +58,12 @@ namespace Walker {
 				pe.Graphics.DrawImage(WalkerForm.PathImage, new Point(0, 0));
 			}
 			pe.Graphics.FillEllipse(Brushes.Red, new Rectangle(map.StartingPoint, new Size(4, 4)));
+			Font font = new System.Drawing.Font("arial", 10, FontStyle.Regular);
+			pe.Graphics.FillRectangle(Brushes.White, 120,20, 210, 50);
+			pe.Graphics.DrawString(stateToPrint, font, Brushes.Black, new PointF(125, 25));
+		}
+		public void SetTextToPrint(string text) {
+			stateToPrint = text;
 		}
 	}
 }

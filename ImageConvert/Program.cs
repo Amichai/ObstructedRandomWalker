@@ -19,8 +19,8 @@ namespace ImageConvert {
 			for (int i = 0; i < width; i++) {
 				for (int j = 0; j < height; j++) {
 					sw.Write(doubleArray[i][j].ToString() + " ");
-				}
-			} sw.Write("\n");
+				}sw.Write("\n");
+			} 
 		}
 	}
 }

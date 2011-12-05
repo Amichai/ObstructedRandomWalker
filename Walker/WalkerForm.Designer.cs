@@ -24,7 +24,7 @@ namespace Walker {
 		/// Required method for Designer support - do not modify
 		/// the contents of this method with the code editor.
 		/// </summary>
-		private void InitializeComponent(Size mapSize) {
+		private void InitializeComponent(Size mapSize, int stepSize) {
 			this.components = new System.ComponentModel.Container();
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.Text = "Walker";
@@ -32,6 +32,7 @@ namespace Walker {
 			this.Walk = new System.Windows.Forms.Button();
 			this.Reset = new System.Windows.Forms.Button();
 			this.Print = new System.Windows.Forms.Button();
+			this.WalkData = new System.Windows.Forms.Label();
 			//
 			// mapDisplay
 			// 
@@ -51,6 +52,12 @@ namespace Walker {
 			this.Walk.Text = "Walk";
 			this.Walk.UseVisualStyleBackColor = true;
 			this.Walk.Click += new System.EventHandler(this.Walk_Click);
+			//
+			// walkData
+			//
+			this.WalkData.Location = new Point(20, 15);
+			this.WalkData.Name = "Walk Data";
+			this.WalkData.Size = new Size(125, 25);
 			// 
 			// Reset
 			// 
@@ -81,6 +88,7 @@ namespace Walker {
 			this.Controls.Add(this.Walk);
 			this.Controls.Add(this.Reset);
 			this.Controls.Add(this.Print);
+			//this.Controls.Add(this.WalkData);
 			this.Controls.Add(this.mapDisplay);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
 			this.Name = "WalkEnviornment";
@@ -99,6 +107,7 @@ namespace Walker {
 		private System.Windows.Forms.Button Walk;
 		private System.Windows.Forms.Button Reset;
 		private System.Windows.Forms.Button Print;
+		private System.Windows.Forms.Label WalkData;
 	}
 }
 
