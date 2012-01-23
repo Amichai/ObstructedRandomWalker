@@ -12,7 +12,7 @@ namespace Walker {
 		Random random = new Random();
 		IEnumerable<Ellipse> obstructions;
 		public RandomWalker(Map map, WalkerForm walkerForm) {
-			boardBounds = new Rectangle(0, 0, map.Size.Width, map.Size.Height);
+			boardBounds = new Rectangle(0, 0, map.Size.Width, map.Size.Height);	
 			obstructions = map.Obstructions;
 		}
 		/// <summary>Returns a new angle in radians</summary>

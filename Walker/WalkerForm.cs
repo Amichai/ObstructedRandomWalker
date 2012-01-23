@@ -13,8 +13,8 @@ using System.Diagnostics;
 namespace Walker {
 	public partial class WalkerForm : Form {
 		const int stepSize = 2;
-		const int stepsToTake = 10000;
-		const int stepsToSaveInHeatMap = 80;
+		const int stepsToTake = 5000;
+		const int stepsToSaveInHeatMap = 200;
 		const int heatmapBoardSize = 200;
 		int stepsWalked = 0;
 		RandomWalker walker;

@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Heatmap.cs" />
+    <Compile Include="ThreeDWalker.cs" />
     <Compile Include="ReflectedAngle.cs" />
     <Compile Include="WalkerForm.cs">
       <SubType>Form</SubType>
