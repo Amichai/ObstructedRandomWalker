@@ -5,23 +5,23 @@ using System.Text;
 using Common;
 
 namespace ThreeDWalker {
-	class ThreeDWalker {
+	public class ThreeDWalker {
 		/// <summary>width, length and height</summary>
 		Obstructions obstructions { get; set; }
 		Point currentPosition { get; set; }
 		Random rand = new Random();
-		public ThreeDWalker(int boardSize) {
+		public ThreeDWalker() {
 			this.obstructions = new Obstructions(Math.PI / 4, 20, 20, 3, 2);
 			this.currentPosition = new Point(0, 0, 0);
 		}
-
+		public FullPath fullPath = new FullPath();
 		public void Walk(int numberOfSteps, double stepSize, Point startingPt = null) {
 			if (startingPt == null)
 				startingPt = currentPosition;
 			else currentPosition = startingPt;
 			bool collision = false;
 			Point testPosition = null;
-			FullPath fullPath = new FullPath();
+			
 			for (int i = 0; i < numberOfSteps; i++) {
 				int counter = 0;
 				do {

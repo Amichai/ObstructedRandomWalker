@@ -9,16 +9,18 @@ namespace ThreeDWalker {
 		private IEnumerable<int> depthsToCheck(Point point) {
 			int lowerDepth = (int)Math.Floor(point.Z / dz);
 			int upperDepth = (int)Math.Ceiling(point.Z / dz);
-			if (point.Z - lowerDepth * dz > dz || point.Z - lowerDepth * dz < 0) {
+			var distanceFromDepth = Math.Abs(point.Z - (lowerDepth * dz));
+			if (distanceFromDepth > dz) {
 				throw new Exception();
 			}
-			if (point.Z - lowerDepth * dz < radius) {
+			if (distanceFromDepth < radius) {
 				yield return lowerDepth;
 			}
-			if (upperDepth - point.Z * dz > dz || upperDepth - point.Z * dz < 0) {
+			distanceFromDepth = Math.Abs((upperDepth * dz) - point.Z);
+			if (distanceFromDepth > dz) {
 				throw new Exception();
 			}
-			if (upperDepth - point.Z * dz < radius) {
+			if (distanceFromDepth < radius) {
 				yield return upperDepth;
 			}
 		}
@@ -52,8 +54,8 @@ namespace ThreeDWalker {
 				foreach (var yIntercept in yInterceptsToCheck(yInterceptForLineThroughPoint, quantizationOfYIntercepts)) {
 					var distanceInXY = Math.Abs(point.Y - (slope * point.X + yIntercept)) * Math.Cos(angle);
 					if (Math.Sqrt(distanceInXY.Sqrd() + distanceInZ.Sqrd()) < radius) {
-						if (hit == true)
-							throw new Exception("More than one hit");
+						if (hit == true) { }
+							//throw new Exception("More than one hit");
 						hit = true;
 						//Optimization:
 						//return true;
