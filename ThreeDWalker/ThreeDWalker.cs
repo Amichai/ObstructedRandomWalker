@@ -11,11 +11,19 @@ namespace ThreeDWalker {
 		Point currentPosition { get; set; }
 		Random rand = new Random();
 		public ThreeDWalker() {
-			this.obstructions = new Obstructions(Math.PI / 4, 20, 20, 3, 2);
+			int r = 6;
+			this.obstructions = new Obstructions(Math.PI / 2, 3*r, 3*r,r, 4);
+			this.currentPosition = new Point(0, 0, r+1);
+		}
+
+		public ThreeDWalker(Obstructions obstructions) {
+			this.obstructions = obstructions;
 			this.currentPosition = new Point(0, 0, 0);
 		}
 		public FullPath fullPath = new FullPath();
+		int numberOfSteps;
 		public void Walk(int numberOfSteps, double stepSize, Point startingPt = null) {
+			this.numberOfSteps = numberOfSteps;
 			if (startingPt == null)
 				startingPt = currentPosition;
 			else currentPosition = startingPt;
@@ -36,6 +44,14 @@ namespace ThreeDWalker {
 				currentPosition = testPosition;
 				fullPath.Add(currentPosition);
 			}
+		}
+
+		public void Continue() {
+			this.Walk(numberOfSteps, 1);
+		}
+
+		public void Reset() {
+			
 		}
 	}
 }

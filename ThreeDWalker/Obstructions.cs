@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Common;
+using System.Diagnostics;
 
 namespace ThreeDWalker {
-	class Obstructions {
+	public class Obstructions {
 		private IEnumerable<int> depthsToCheck(Point point) {
 			int lowerDepth = (int)Math.Floor(point.Z / dz);
 			int upperDepth = (int)Math.Ceiling(point.Z / dz);
@@ -43,25 +44,87 @@ namespace ThreeDWalker {
 			}
 		}
 
+		private bool testForHit(double dxy1, double dxy2, double dz1, double dz2) {
+			if (Math.Sqrt(dxy1.Sqrd() + dz1.Sqrd()) < this.radius) {
+				return true;
+			} else if (Math.Sqrt(dxy2.Sqrd() + dz2.Sqrd()) < this.radius) {
+				return true;
+			} return false;
+		}
+
 		public bool TestForCollision(Point point) {
 			bool hit = false;
-			foreach (var zValIndex in depthsToCheck(point)) {
-				var angle = getAngleOfCylinder(zValIndex);
-				var distanceInZ = Math.Abs(point.Z - (zValIndex * dz));
-				var slope = Math.Atan(angle);
-				var yInterceptForLineThroughPoint = point.Y - slope * point.X;
-				var quantizationOfYIntercepts = this.dxy / Math.Sin(angle);
-				foreach (var yIntercept in yInterceptsToCheck(yInterceptForLineThroughPoint, quantizationOfYIntercepts)) {
-					var distanceInXY = Math.Abs(point.Y - (slope * point.X + yIntercept)) * Math.Cos(angle);
-					if (Math.Sqrt(distanceInXY.Sqrd() + distanceInZ.Sqrd()) < radius) {
-						if (hit == true) { }
-							//throw new Exception("More than one hit");
-						hit = true;
-						//Optimization:
-						//return true;
-					}
-				}
-			}
+			var zInUnitsOfDz  =point.Z / this.dz;
+			var dz1 = (zInUnitsOfDz - Math.Floor(zInUnitsOfDz)) * this.dz;
+			var dz2 = (Math.Ceiling(zInUnitsOfDz) - zInUnitsOfDz)*this.dz;
+			if (dz1 < 0 || dz2 < 0 || dz1 > this.dz || dz2 > this.dz)
+				throw new Exception();
+
+			var rodAngle1 = Math.Ceiling(Math.Floor(zInUnitsOfDz) / this.layersBeforeRotation) * this.dtheta;
+			var rodAngle2 = Math.Ceiling(Math.Ceiling(zInUnitsOfDz) / this.layersBeforeRotation) * this.dtheta;
+			//It's possible that these two angles are exactly the same and this duplicity is redundant
+			var slope1 = Math.Atan(rodAngle1);
+			var slope2 = Math.Atan(rodAngle2);
+			var yIntercept1 = point.Y - slope1 * point.X;
+			var yIntercept2 = point.Y - slope2 * point.X;
+			var yInterceptQuantization1 = this.dxy / Math.Cos(rodAngle1);
+			var b = Math.Floor(yIntercept1 / yInterceptQuantization1) * yInterceptQuantization1;
+			Func<double, double> f_rod1 = i => slope1 * i + b;
+			var dxy1 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle1);
+			Func<double, double> f_rod2 = i => slope2 * i + b;
+			var dxy2 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle2);
+			hit = testForHit(dxy1, dxy2, dz1, dz2);
+
+			b = Math.Ceiling(yIntercept1 / yInterceptQuantization1) * yInterceptQuantization1;
+			f_rod1 = i => slope1 * i + b;
+			dxy1 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle1);
+			f_rod2 = i => slope2 * i + b;
+			dxy2 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle2);
+			hit = testForHit(dxy1, dxy2, dz1, dz2);
+
+			b = Math.Floor(yIntercept2 / yInterceptQuantization1) * yInterceptQuantization1;
+			f_rod1 = i => slope1 * i + b;
+			dxy1 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle1);
+			f_rod2 = i => slope2 * i + b;
+			dxy2 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle2);
+			hit = testForHit(dxy1, dxy2, dz1, dz2);
+
+			b = Math.Ceiling(yIntercept2 / yInterceptQuantization1) * yInterceptQuantization1;
+			f_rod1 = i => slope1 * i + b;
+			dxy1 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle1);
+			f_rod2 = i => slope2 * i + b;
+			dxy2 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle2);
+			hit = testForHit(dxy1, dxy2, dz1, dz2);
+
+			var yInterceptQuantization2 = this.dxy / Math.Cos(rodAngle2);
+			b = Math.Floor(yIntercept1 / yInterceptQuantization1) * yInterceptQuantization2;
+			f_rod1 = i => slope1 * i + b;
+			dxy1 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle1);
+			f_rod2 = i => slope2 * i + b;
+			dxy2 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle2);
+			hit = testForHit(dxy1, dxy2, dz1, dz2);
+
+			b = Math.Ceiling(yIntercept1 / yInterceptQuantization1) * yInterceptQuantization2;
+			f_rod1 = i => slope1 * i + b;
+			dxy1 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle1);
+			f_rod2 = i => slope2 * i + b;
+			dxy2 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle2);
+			hit = testForHit(dxy1, dxy2, dz1, dz2);
+
+			b = Math.Floor(yIntercept2 / yInterceptQuantization1) * yInterceptQuantization2;
+			f_rod1 = i => slope1 * i + b;
+			dxy1 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle1);
+			f_rod2 = i => slope2 * i + b;
+			dxy2 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle2);
+			hit = testForHit(dxy1, dxy2, dz1, dz2);
+
+			b = Math.Ceiling(yIntercept2 / yInterceptQuantization1) * yInterceptQuantization2;
+			f_rod1 = i => slope1 * i + b;
+			dxy1 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle1);
+			f_rod2 = i => slope2 * i + b;
+			dxy2 = Math.Abs(point.Y - f_rod1(point.X)) * Math.Cos(rodAngle2);
+			hit = testForHit(dxy1, dxy2, dz1, dz2);
+
 			return hit;
 		}
 
