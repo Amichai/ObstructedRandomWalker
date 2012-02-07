@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Diagnostics;
+using Common;
 
 namespace ThreeDWalker {
 	public class Heatmap {
@@ -12,6 +13,20 @@ namespace ThreeDWalker {
 			this.magnification = magnification;
 			this.size = size * magnification;
 			threeDArray = new List<List<List<int>>>(this.size);
+			initialize3DArray(this.size);
+		}
+		private void initialize3DArray(int size) {
+			var A = new List<int>(size);
+			for (int i = 0; i < size; i++) {
+				A.Add(0);
+			}
+			var B = new List<List<int>>(size);
+			for (int i = 0; i < size; i++) {
+				B.Add(A);
+			}
+			for (int i = 0; i < size; i++) {
+				threeDArray.Add(B);
+			}
 		}
 		List<List<List<int>>> threeDArray;
 		//As paths get added, add to this data set
@@ -37,6 +52,13 @@ namespace ThreeDWalker {
 				Debug.Print(outOfRangeCounter.ToString() + " " + xDistance.ToString() + " " + yDistance.ToString() + " " + zDistance.ToString());
 			}else
 				threeDArray[xDistance][yDistance][zDistance]++;
+		}
+
+		internal void Print() {
+			int counter = 0;
+			foreach( var b in threeDArray.GetBitmaps(this.size, this.size, this.size)){
+				b.Save("heatmap" + (++counter).ToString() + ".bmp");
+			}
 		}
 	}
 }

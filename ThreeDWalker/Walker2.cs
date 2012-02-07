@@ -62,6 +62,10 @@ namespace ThreeDWalker {
 			}
 		}
 
+		public void PrintHeatMap() {
+			heatmap.Print();
+		}
+
 		private Point randomStart() {
 			Point pt = null;
 			int counter = 0;
