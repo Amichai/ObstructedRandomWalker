@@ -8,9 +8,11 @@ C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x86\Debug\Walker.pdb
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\Common.dll
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\Common.pdb
-C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\Oyster.IntX.dll
-C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\Oyster.IntX.xml
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x86\Debug\Walker.WalkerForm.resources
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\SLaks.Progression.dll
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\SLaks.Progression.pdb
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\SLaks.Progression.xml
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\MathNet.Numerics.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\zlib.net.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\MathNet.Numerics.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\bin\Debug\MathNet.Numerics.xml

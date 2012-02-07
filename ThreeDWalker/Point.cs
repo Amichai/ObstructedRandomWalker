@@ -20,5 +20,21 @@ namespace ThreeDWalker {
 			double z = distance * Math.Cos(theta);
 			return new Point(this.X + x, this.Y + y, this.Z + z);
 		}
+
+		public Point CorrectForPeriodicBoundaries(double width, double height, double depth){
+			if (X < 0)
+				X += width;
+			if (Y < 0)
+				Y += height;
+			if (depth!= double.MinValue && Z < 0)
+				Z += depth;
+			if (X > width)
+				X -= width;
+			if (Y > height)
+				Y -= height;
+			if (depth != double.MinValue && Z > depth)
+				Z -= depth;
+			return new Point(X, Y, Z);
+		}
 	}
 }

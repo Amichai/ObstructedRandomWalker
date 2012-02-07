@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 namespace ThreeDWalker {
 	public class Obstructions {
+
 		private IEnumerable<int> depthsToCheck(Point point) {
 			int lowerDepth = (int)Math.Floor(point.Z / dz);
 			int upperDepth = (int)Math.Ceiling(point.Z / dz);
@@ -151,6 +152,41 @@ namespace ThreeDWalker {
 			this.dz = dZ;
 			this.radius = radius;
 			this.layersBeforeRotation = layersBeforeRotation;
+		}
+	}
+	public class TwoDObstructions {
+		public TwoDObstructions(List<Point> centerPoints, List<double> radii, int width, int height) {
+			this.centerPoints = centerPoints;
+			this.radii = radii;
+			this.width = width;
+			this.height = height;
+		}
+		private List<Point> centerPoints = null;
+		private List<double> radii = null;
+		private int width, height;
+
+		internal bool TestForCollision(Point testPosition) {
+			for (int i = 0; i < centerPoints.Count(); i++) {
+				var x1 = centerPoints[i].X;
+				var y1 = centerPoints[i].Y;
+				var x2 = testPosition.X;
+				var y2 = testPosition.Y;
+				if (distance(x1, y1, x2, y2) < radii[i])
+					return true;
+			}
+			return false;
+		}
+
+		private double distance(double x1, double y1, double x2, double y2) {
+			return Math.Sqrt((x2 - x1).Sqrd() + (y2 - y1).Sqrd());
+		}
+
+		public void Print() {
+			List<double> xVals  = centerPoints.Select(i=> i.X).ToList();
+			List<double> yVals  = centerPoints.Select(i=> i.Y).ToList();
+
+			Utilities.DrawCircles(width, height,yVals, xVals, radii, 30).Save("obstructions.bmp");
+
 		}
 	}
 }

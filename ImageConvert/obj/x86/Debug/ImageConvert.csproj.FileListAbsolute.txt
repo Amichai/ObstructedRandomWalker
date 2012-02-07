@@ -1,9 +1,11 @@
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\ImageConvert.exe
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\ImageConvert.pdb
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\Common.dll
-C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\Oyster.IntX.dll
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\Common.pdb
-C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\Oyster.IntX.xml
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\obj\x86\Debug\ImageConvert.exe
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\obj\x86\Debug\ImageConvert.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\MathNet.Numerics.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\zlib.net.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\MathNet.Numerics.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ImageConvert\bin\Debug\MathNet.Numerics.xml

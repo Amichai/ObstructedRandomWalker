@@ -1,9 +1,11 @@
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\ThreeDWalker.pdb
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\Common.dll
-C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\Oyster.IntX.dll
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\Common.pdb
-C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\Oyster.IntX.xml
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\obj\x86\Debug\ResolveAssemblyReference.cache
 C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\obj\x86\Debug\ThreeDWalker.pdb
-C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\ThreeDWalker.dll
-C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\obj\x86\Debug\ThreeDWalker.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\MathNet.Numerics.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\zlib.net.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\MathNet.Numerics.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\MathNet.Numerics.xml
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\ThreeDWalker.exe
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\obj\x86\Debug\ThreeDWalker.exe
