@@ -33,7 +33,7 @@ namespace ThreeDWalker {
 		private LinkedList<Point> points = new LinkedList<Point>();
 
 		public void AddStep(Point newPoint) {
-			if (points.Count() > stepsToAssess) {
+			if (points.Count() >= stepsToAssess) {
 				incrementHeatMapValues(points.First(), newPoint);
 				points.RemoveFirst();
 			}
@@ -47,11 +47,11 @@ namespace ThreeDWalker {
 			int xDistance = (int)Math.Round(endPt.X * magnification) - (int)Math.Round(startPt.X * magnification);
 			int yDistance = (int)Math.Round(endPt.Y * magnification) - (int)Math.Round(startPt.Y * magnification);
 			int zDistance = (int)Math.Round(endPt.Z * magnification) - (int)Math.Round(startPt.Z * magnification);
-			if(xDistance > size || yDistance> size || zDistance > size){
+			if(Math.Abs(xDistance) >= size/2 || Math.Abs(yDistance)>= size/2 || Math.Abs(zDistance) >= size/2){
 				outOfRangeCounter++;
 				Debug.Print(outOfRangeCounter.ToString() + " " + xDistance.ToString() + " " + yDistance.ToString() + " " + zDistance.ToString());
 			}else
-				threeDArray[xDistance][yDistance][zDistance]++;
+				threeDArray[xDistance + size / 2][yDistance + size / 2][zDistance + size / 2]++;
 		}
 
 		internal void Print() {

@@ -34,7 +34,7 @@ namespace ThreeDWalker {
 		int numberOfSteps;
 		Point currentPosition = null;
 		Random rand = new Random();
-		Heatmap heatmap = new Heatmap(20,20, 20);
+		Heatmap heatmap = new Heatmap(10,2, 10);
 
 		public void Walk(int numberOfSteps, double stepSize, Point startingPt = null) {
 			this.numberOfSteps = numberOfSteps;
