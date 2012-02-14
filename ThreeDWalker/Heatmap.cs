@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using Common;
+using System.Drawing;
 
 namespace ThreeDWalker {
 	public class Heatmap {
@@ -12,23 +13,9 @@ namespace ThreeDWalker {
 			this.stepsToAssess = stepsToAssess;
 			this.magnification = magnification;
 			this.size = size * magnification;
-			threeDArray = new List<List<List<int>>>(this.size);
-			initialize3DArray(this.size);
+			threeDArray = new int[this.size, this.size, this.size];
 		}
-		private void initialize3DArray(int size) {
-			var A = new List<int>(size);
-			for (int i = 0; i < size; i++) {
-				A.Add(0);
-			}
-			var B = new List<List<int>>(size);
-			for (int i = 0; i < size; i++) {
-				B.Add(A);
-			}
-			for (int i = 0; i < size; i++) {
-				threeDArray.Add(B);
-			}
-		}
-		List<List<List<int>>> threeDArray;
+		int[, ,] threeDArray;
 		//As paths get added, add to this data set
 		private LinkedList<Point> points = new LinkedList<Point>();
 
@@ -42,22 +29,33 @@ namespace ThreeDWalker {
 				throw new Exception("The rolling cache is too big");
 		}
 
+		int outOfRangeCounter = 0;
 		private void incrementHeatMapValues(Point startPt, Point endPt) {
-			int outOfRangeCounter = 0;
-			int xDistance = (int)Math.Round(endPt.X * magnification) - (int)Math.Round(startPt.X * magnification);
-			int yDistance = (int)Math.Round(endPt.Y * magnification) - (int)Math.Round(startPt.Y * magnification);
-			int zDistance = (int)Math.Round(endPt.Z * magnification) - (int)Math.Round(startPt.Z * magnification);
-			if(Math.Abs(xDistance) >= size/2 || Math.Abs(yDistance)>= size/2 || Math.Abs(zDistance) >= size/2){
+			int xDistance = (int)Math.Round(endPt.X * magnification - startPt.X * magnification);
+			int yDistance = (int)Math.Round(endPt.Y * magnification - startPt.Y * magnification);
+			int zDistance = (int)Math.Round(endPt.Z * magnification - startPt.Z * magnification);
+			if (Math.Abs(xDistance) >= size / 2 || Math.Abs(yDistance) >= size / 2 || Math.Abs(zDistance) >= size / 2) {
 				outOfRangeCounter++;
-				Debug.Print(outOfRangeCounter.ToString() + " " + xDistance.ToString() + " " + yDistance.ToString() + " " + zDistance.ToString());
-			}else
-				threeDArray[xDistance + size / 2][yDistance + size / 2][zDistance + size / 2]++;
+				//Debug.Print(outOfRangeCounter.ToString() + " " + xDistance.ToString() + " " + yDistance.ToString() + " " + zDistance.ToString());
+			} else {
+				int xIdx = xDistance + size / 2, yIdx = yDistance + size / 2, zIdx = zDistance + size / 2;
+				threeDArray[xIdx,yIdx,zIdx]++;
+				Debug.Print(xIdx.ToString() + "," + yIdx.ToString() + "," + zIdx.ToString());
+			}
 		}
 
 		internal void Print() {
 			int counter = 0;
-			foreach( var b in threeDArray.GetBitmaps(this.size, this.size, this.size)){
-				b.Save("heatmap" + (++counter).ToString() + ".bmp");
+			for (int i = 0; i < this.size; i++) {
+				int[,] matrixToPrint = new int[this.size, this.size];
+				for (int j = 0; j < this.size; j++) {
+					for (int k = 0; k < this.size; k++) {
+						matrixToPrint[j, k] = threeDArray[i, j, k];
+					}
+				}
+				var B = matrixToPrint.ConvertToBitmap(Color.White);
+				//var B = threeDArray[i].ConvertDoubleArrayToBitmap(Color.White);
+				B.Save(@"c:\users\amichai\documents\visual studio 2010\projects\randomwalker\threedwalker\bin\debug\heatmap" + (++counter).ToString() + ".bmp");
 			}
 		}
 	}
