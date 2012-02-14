@@ -27,13 +27,13 @@ namespace ThreeDWalker {
 		public Point CorrectForPeriodicBoundaries(double width, double height, double depth){
 			if (X < 0)
 				X += width;
-			if (Y < 0)
+			if (height != double.MinValue && Y < 0)
 				Y += height;
 			if (depth!= double.MinValue && Z < 0)
 				Z += depth;
 			if (X > width)
 				X -= width;
-			if (Y > height)
+			if (height != double.MinValue && Y > height)
 				Y -= height;
 			if (depth != double.MinValue && Z > depth)
 				Z -= depth;

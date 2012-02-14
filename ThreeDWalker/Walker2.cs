@@ -29,6 +29,7 @@ namespace ThreeDWalker {
 			obstructions.Print();
 		}
 
+
 		TwoDObstructions obstructions = null;
 		public FullPath fullPath = new FullPath();
 		int numberOfSteps;
