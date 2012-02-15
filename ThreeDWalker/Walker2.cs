@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
+using Common;
+using System.Diagnostics;
 
 namespace ThreeDWalker {
 	/// <summary>This walker takes 2d obstruction info and avoids in 3d</summary>
@@ -24,21 +26,24 @@ namespace ThreeDWalker {
 								double.Parse(splitData[++i]), 0); 
 				centerPoints.Add(pt);
 			}
-			obstructions = new TwoDObstructions(centerPoints, radii, (int)Math.Ceiling(width), (int)Math.Ceiling(height));
+			double angleOffset = Math.PI / 2;
+			for (int i = 0; i < 4; i++) {
+				TwoDObstructions layer = new TwoDObstructions(centerPoints, radii, (int)Math.Ceiling(width), (int)Math.Ceiling(height));
+				obstructions.AddLayer(layer, i * angleOffset);
+			}
 			reader.Close();
-			obstructions.Print();
 		}
 
+		Obstructions2 obstructions = new Obstructions2();
 
-		TwoDObstructions obstructions = null;
 		public FullPath fullPath = new FullPath();
 		int numberOfSteps;
 		Point currentPosition = null;
 		Random rand = new Random();
 		//HEATMAP SPECIFICATION HAPPENS HERE
-		Heatmap heatmap = new Heatmap(9,3, 20);
+		Heatmap heatmap = new Heatmap(20,3, 20);
 
-		public void Walk(int numberOfSteps, double stepSize, Point startingPt = null) {
+		public IEnumerable<StatusReport> Walk(int numberOfSteps, double stepSize, Point startingPt = null) {
 			this.numberOfSteps = numberOfSteps;
 			if (startingPt == null)
 				currentPosition = randomStart();
@@ -53,14 +58,14 @@ namespace ThreeDWalker {
 					double angle1 = ((double)rand.Next(360) + rand.NextDouble()) * (Math.PI / 180d);
 					double angle2 = ((double)rand.Next(360) + rand.NextDouble()) * (Math.PI / 180d);
 					testPosition = currentPosition.GetNextPt(stepSize, angle1, angle2);
-					testPosition = testPosition.CorrectForPeriodicBoundaries(this.width, this.height, double.MinValue);
 					collision = obstructions.TestForCollision(testPosition);
-					if (counter++ > 30)
+					if (counter++ > 300)
 						throw new Exception("Can't find a move");
 				} while (collision);
 				currentPosition = testPosition;
 				heatmap.AddStep(currentPosition);
 				fullPath.Add(currentPosition);
+				yield return new StatusReport(i / numberOfSteps, currentPosition);
 			}
 		}
 
@@ -75,7 +80,7 @@ namespace ThreeDWalker {
 				double xVal = rand.Next(0, (int)width) + rand.NextDouble();
 				double yVal = rand.Next(0, (int)height) + rand.NextDouble();
 				pt = new Point(xVal, yVal, 0);
-				if (counter++ > 20)
+				if (counter++ > 200)
 					throw new Exception("Can't find a free spot");
 			} while (!obstructions.TestForCollision(pt));
 			return pt;

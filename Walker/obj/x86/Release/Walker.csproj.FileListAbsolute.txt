@@ -1,0 +1,5 @@
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x86\Release\Walker.Properties.Resources.resources
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x86\Release\Walker.WalkerForm.resources
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Walker\obj\x86\Release\GenerateResource.write.1.tlog

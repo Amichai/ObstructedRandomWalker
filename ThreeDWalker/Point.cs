@@ -25,18 +25,31 @@ namespace ThreeDWalker {
 		}
 
 		public Point CorrectForPeriodicBoundaries(double width, double height, double depth){
-			if (X < 0)
-				X += width;
-			if (height != double.MinValue && Y < 0)
-				Y += height;
-			if (depth!= double.MinValue && Z < 0)
-				Z += depth;
-			if (X > width)
-				X -= width;
-			if (height != double.MinValue && Y > height)
-				Y -= height;
-			if (depth != double.MinValue && Z > depth)
-				Z -= depth;
+			if (width != double.MinValue && X > 0) {
+				X -= ((int)X / (int)width) * width;
+			}
+			if (height != double.MinValue && Y > 0) {
+				Y -= ((int)Y / (int)height) * height;
+			}
+			if (depth != double.MinValue && Z > 0) {
+				Z -= ((int)Z / (int)depth) * depth;
+			}
+			if (width != double.MinValue && X < 0) {
+				X -= (((int)X / (int)width)-1) * width;
+			}
+			if (height != double.MinValue && Y < 0) {
+				Y -= (((int)Y / (int)height) -1) * height;
+			}
+			if (depth != double.MinValue && Z < 0) {
+				Z -= (((int)Z / (int)depth) -1) * depth;
+			}
+			if (depth != double.MinValue &&( Z < 0 || Z > depth))
+				throw new Exception();
+			if (width != double.MinValue &&(X < 0 || X > width))
+				throw new Exception();
+			if (height != double.MinValue && (Y < 0 || Y > height))
+				throw new Exception();
+			
 			return new Point(X, Y, Z);
 		}
 	}

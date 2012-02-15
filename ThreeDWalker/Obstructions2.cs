@@ -12,29 +12,52 @@ namespace ThreeDWalker {
 		///retest for collision
 		///
 		private int width, height;
-		public Obstructions2(List<TwoDObstructions> layers, int width, int height) {
-			this.layers = layers;
-			this.width = width;
-			this.height = height;
+		//public Obstructions2(List<TwoDObstructions> layers, int width, int height) {
+		//    this.layers = layers;
+		//    this.width = width;
+		//    this.height = height;
+		//}
+
+		//public Obstructions2(TwoDObstructions layer, int numOfLayers, double angleOffset) {
+		//    for (int i = 0; i < numOfLayers; i++) {
+		//        layer.SetAngle(angleOffset * i);
+		//        this.layers.Add(layer);
+		//    }
+		//    this.height = layer.Height();
+		//    this.width = layer.Width();
+		//}
+
+		public void AddLayer(TwoDObstructions layer, double angleOffset) {
+			layer.SetAngle(angleOffset);
+			this.layers.Add(layer);
+			this.height = layer.Height();
+			this.width = layer.Width();
 		}
 
 		private List<TwoDObstructions> layers = new List<TwoDObstructions>();
 
 		internal bool TestForCollision(Point testPosition) {
-			int layerIdx = (int)(testPosition.Y / this.height) % this.layers.Count();
-			var angle = this.layers[layerIdx].GetAngle();
+			int layerIdx = (int)( testPosition.Y / this.height) % this.layers.Count();
+			if (layerIdx < 0)
+				layerIdx += this.layers.Count();
+			double angle = double.MaxValue;
+			try {
+				angle = this.layers[layerIdx].GetAngle();
+			} catch {
+				throw new Exception();
+			}
 			var transformedPt = transformCoordinates(angle, testPosition);
-			return this.layers[layerIdx].TestForCollision(transformedPt);
+			return this.layers[layerIdx].TestForCollision(transformedPt.CorrectForPeriodicBoundaries(this.width, this.height, double.MinValue));
 		}
 
 		private Point transformCoordinates(double theta, Point pt) {
-			var xPrime = pt.X * Math.Cos(theta) - pt.Y *Math.Sin(theta);
-			var yPrime = pt.X * Math.Sin(theta) + pt.Y * Math.Cos(theta);
-			return new Point(xPrime, yPrime, pt.Z);
+			var xPrime = pt.X * Math.Cos(theta) - pt.Z *Math.Sin(theta);
+			var zPrime = pt.X * Math.Sin(theta) + pt.Z * Math.Cos(theta);
+			return new Point(xPrime, pt.Y, zPrime);
 		}
 	}
 
-	private class TwoDObstructions {
+	public class TwoDObstructions {
 		internal TwoDObstructions(List<Point> centerPoints, List<double> radii, int width, int height) {
 			this.centerPoints = centerPoints;
 			this.radii = radii;
@@ -70,6 +93,18 @@ namespace ThreeDWalker {
 
 		internal double GetAngle() {
 			return this.angle;
+		}
+
+		internal void SetAngle(double angleOffset) {
+			this.angle = angleOffset;
+		}
+
+		internal int Width() {
+			return this.width;
+		}
+
+		internal int Height() {
+			return this.height;
 		}
 	}
 

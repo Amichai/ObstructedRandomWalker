@@ -1,0 +1,53 @@
+﻿Build started 2/14/2012 4:13:32 PM.
+     1>Project "C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\BuldyrevPort\BuldyrevPort.vcxproj" on node 2 (build target(s)).
+     1>PrepareForBuild:
+         Creating directory "C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Release\".
+       InitializeBuildStatus:
+         Creating "Release\BuldyrevPort.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"StdAfx.h" /Fp"Release\BuldyrevPort.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
+         stdafx.cpp
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Release\BuldyrevPort.pch" /Fo"Release\\" /Fd"Release\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt BuldyrevPort.cpp
+         BuldyrevPort.cpp
+     1>BuldyrevPort.cpp(19): warning C4101: 'a' : unreferenced local variable
+     1>BuldyrevPort.cpp(19): warning C4101: 'b' : unreferenced local variable
+     1>BuldyrevPort.cpp(20): warning C4101: 'k' : unreferenced local variable
+     1>BuldyrevPort.cpp(19): warning C4101: 'z' : unreferenced local variable
+     1>BuldyrevPort.cpp(20): warning C4101: 'l' : unreferenced local variable
+     1>BuldyrevPort.cpp(20): warning C4101: 'j' : unreferenced local variable
+     1>BuldyrevPort.cpp(19): warning C4101: 'z1' : unreferenced local variable
+     1>BuldyrevPort.cpp(187): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(190): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(214): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(225): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(240): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(243): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(269): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(280): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(324): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(325): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(326): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(361): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(371) : see declaration of 'sprintf'
+     1>BuldyrevPort.cpp(362): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\include\stdio.h(234) : see declaration of 'fopen'
+     1>BuldyrevPort.cpp(369): warning C4244: '=' : conversion from 'double' to 'int', possible loss of data
+     1>BuldyrevPort.cpp(132): warning C4101: 'color1' : unreferenced local variable
+     1>BuldyrevPort.cpp(352): warning C4101: 'fact1' : unreferenced local variable
+     1>BuldyrevPort.cpp(351): warning C4101: 'm1' : unreferenced local variable
+       Link:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Release\BuldyrevPort.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\BuldyrevPort.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Release\BuldyrevPort.pdb" /SUBSYSTEM:CONSOLE /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Release\BuldyrevPort.lib" /MACHINE:X86 Release\BuldyrevPort.obj
+         Release\stdafx.obj
+         Generating code
+         Finished generating code
+         BuldyrevPort.vcxproj -> C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Release\BuldyrevPort.exe
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\Release\BuldyrevPort.exe;#1" /manifest Release\BuldyrevPort.exe.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Release\BuldyrevPort.unsuccessfulbuild".
+         Touching "Release\BuldyrevPort.lastbuildstate".
+     1>Done Building Project "C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\BuldyrevPort\BuldyrevPort.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:18.60
