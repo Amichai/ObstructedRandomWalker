@@ -8,12 +8,16 @@ using System.Drawing;
 
 namespace ThreeDWalker {
 	public class Heatmap {
-		private int stepsToAssess, magnification, size;
-		public Heatmap(int stepsToAssess, int magnification, int size) {
-			this.stepsToAssess = stepsToAssess;
+		private int stepsToAssess, magnification, size, nt,ns;
+		/// <param name="ns">this is the elementary time step between measurements</param>
+		/// <param name="nt">gives the number of measurements to take as ns*ns*k*k as k goes from 1 to nt</param>
+		public Heatmap(int ns, int nt, int magnification, int size) {
+			this.stepsToAssess = ns * ns * nt * nt;
+			this.nt = nt;
+			this.ns = ns;
 			this.magnification = magnification;
 			this.size = size * magnification;
-			for (int i = 0; i < stepsToAssess; i++) {
+			for (int i = 0; i < nt; i++) {
 				var a = new int[this.size, this.size, this.size];
 				threeDArrays.Add(a);
 			}
@@ -24,8 +28,9 @@ namespace ThreeDWalker {
 
 		public void AddStep(Point newPoint) {
 			if (points.Count() >= stepsToAssess) {
-				for (int i = 0; i < stepsToAssess; i++) {
-					incrementHeatMapValues(points.ElementAt(i), newPoint, i);
+				for(int i=0; i< this.nt; i++){
+					int stepToSave = i * i * this.ns * this.ns;
+					incrementHeatMapValues(points.ElementAt(stepToSave), newPoint, i);
 				}
 				points.RemoveFirst();
 			}
@@ -41,7 +46,6 @@ namespace ThreeDWalker {
 			int zDistance = (int)Math.Round(endPt.Z * magnification - startPt.Z * magnification);
 			if (Math.Abs(xDistance) >= size / 2 || Math.Abs(yDistance) >= size / 2 || Math.Abs(zDistance) >= size / 2) {
 				outOfRangeCounter++;
-				//Debug.Print(outOfRangeCounter.ToString() + " " + xDistance.ToString() + " " + yDistance.ToString() + " " + zDistance.ToString());
 			} else {
 				int xIdx = xDistance + size / 2, yIdx = yDistance + size / 2, zIdx = zDistance + size / 2;
 				threeDArrays[idx][xIdx,yIdx,zIdx]++;
@@ -49,7 +53,7 @@ namespace ThreeDWalker {
 		}
 
 		internal void Print() {
-			for (int idx = stepsToAssess - 1; idx >= 0; idx--) {
+			for (int idx = nt - 1; idx >= 0; idx--) {
 				int counter = 0;
 				for (int i = 0; i < this.size; i++) {
 					int[,] matrixToPrint = new int[this.size, this.size];
@@ -59,7 +63,6 @@ namespace ThreeDWalker {
 						}
 					}
 					var B = matrixToPrint.ConvertToBitmap(Color.White);
-					//var B = threeDArray[i].ConvertDoubleArrayToBitmap(Color.White);
 					B.Save(@"c:\users\amichai\documents\visual studio 2010\projects\randomwalker\threedwalker\bin\debug\heatmap" + (stepsToAssess - idx).ToString() + "steps" + (++counter).ToString() + ".bmp");
 				}
 			}

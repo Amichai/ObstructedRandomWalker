@@ -10,7 +10,8 @@ namespace ThreeDWalker {
 	/// <summary>This walker takes 2d obstruction info and avoids in 3d</summary>
 	public class Walker2 {
 		double width, height;
-		public Walker2() {
+		public Walker2(Heatmap heatmap) {
+			this.heatmap = heatmap;
 			TextReader reader = new StreamReader(@"C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\ThreeDWalker\bin\Debug\junk.txt.bs");
 			string obstructionData = reader.ReadToEnd();
 			var splitData = obstructionData.Split(new char[]{' ', '\n'}, StringSplitOptions.RemoveEmptyEntries);
@@ -40,8 +41,7 @@ namespace ThreeDWalker {
 		int numberOfSteps;
 		Point currentPosition = null;
 		Random rand = new Random();
-		//HEATMAP SPECIFICATION HAPPENS HERE
-		Heatmap heatmap = new Heatmap(20,3, 20);
+		Heatmap heatmap = null;
 
 		public IEnumerable<StatusReport> Walk(int numberOfSteps, double stepSize, Point startingPt = null) {
 			this.numberOfSteps = numberOfSteps;
@@ -52,15 +52,20 @@ namespace ThreeDWalker {
 			Point testPosition = null;
 
 			for (int i = 0; i < numberOfSteps; i++) {
-				int counter = 0;
+				int counter = 0, counter2 = 0; ;
 				do {
 					//gets a random angle in radians
 					double angle1 = ((double)rand.Next(360) + rand.NextDouble()) * (Math.PI / 180d);
 					double angle2 = ((double)rand.Next(360) + rand.NextDouble()) * (Math.PI / 180d);
 					testPosition = currentPosition.GetNextPt(stepSize, angle1, angle2);
 					collision = obstructions.TestForCollision(testPosition);
-					if (counter++ > 300)
-						throw new Exception("Can't find a move");
+					if (counter++ > 300) {
+						counter = 0;
+						currentPosition = randomStart();
+						if (counter2++ > 300) {
+							throw new Exception();
+						}
+					}
 				} while (collision);
 				currentPosition = testPosition;
 				heatmap.AddStep(currentPosition);
