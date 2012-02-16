@@ -1,0 +1,4 @@
+var heatmap = new Heatmap(5,20, 5, 10);
+Walker2 walker = new Walker2(heatmap);
+//this is approximately a 30 minute trial
+foreach (var i in walker.Walk(2000000, .05)) {

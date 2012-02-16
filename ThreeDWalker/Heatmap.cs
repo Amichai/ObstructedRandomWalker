@@ -63,7 +63,7 @@ namespace ThreeDWalker {
 						}
 					}
 					var B = matrixToPrint.ConvertToBitmap(Color.White);
-					B.Save(@"c:\users\amichai\documents\visual studio 2010\projects\randomwalker\threedwalker\bin\debug\heatmap" + (stepsToAssess - idx).ToString() + "steps" + (++counter).ToString() + ".bmp");
+					B.Save(@"c:\users\amichai\documents\visual studio 2010\projects\randomwalker\threedwalker\bin\debug\heatmap" + (nt - idx).ToString() + "steps" + (++counter).ToString() + ".bmp");
 				}
 			}
 		}

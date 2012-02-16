@@ -59,7 +59,7 @@ namespace ThreeDWalker {
 					double angle2 = ((double)rand.Next(360) + rand.NextDouble()) * (Math.PI / 180d);
 					testPosition = currentPosition.GetNextPt(stepSize, angle1, angle2);
 					collision = obstructions.TestForCollision(testPosition);
-					if (counter++ > 300) {
+					if (i == 0 && counter++ > 300) {
 						counter = 0;
 						currentPosition = randomStart();
 						if (counter2++ > 300) {
@@ -70,7 +70,7 @@ namespace ThreeDWalker {
 				currentPosition = testPosition;
 				heatmap.AddStep(currentPosition);
 				fullPath.Add(currentPosition);
-				yield return new StatusReport(i / numberOfSteps, currentPosition);
+				yield return new StatusReport((int)((double)i*100 / numberOfSteps), currentPosition);
 			}
 		}
 
@@ -93,6 +93,10 @@ namespace ThreeDWalker {
 
 		public void Continue() {
 			this.Walk(numberOfSteps, 1);
+		}
+
+		public void PrintProjections(int magnification) {
+			fullPath.PrintProjections(magnification);
 		}
 	}
 }

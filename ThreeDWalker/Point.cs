@@ -12,6 +12,10 @@ namespace ThreeDWalker {
 		}
 		public double X, Y, Z;
 
+		public static Point operator *(Point p1, int p2){
+			return new Point(p1.X * p2, p1.Y * p2, p1.Z * p2);
+		}
+
 		//http://en.wikipedia.org/wiki/Spherical_coordinate_system#Cartesian_coordinates
 		/// <summary>Changes the value of the current position based on the random walk values</summary>
 		public Point GetNextPt(double distance, double phi, double theta) {
