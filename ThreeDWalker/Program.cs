@@ -13,14 +13,14 @@ namespace ThreeDWalker {
 			//2000000 is approximately a 30 minute trial
 			int lastPercent = 0;
 			Debug.Print(lastPercent.ToString());
-			foreach (var i in walker.Walk(200000, .05)) {
+			foreach (var i in walker.Walk(100000, .05)) {
 				if(i.ProgressValue != lastPercent){
-					Debug.Print(i.ToString());
+					Debug.Print(i.ProgressValue.ToString());
 					lastPercent = i.ProgressValue;
 				}
 			}
-			walker.PrintProjections(100);
-			//walker.PrintHeatMap();
+			//walker.PrintProjections(100);
+			walker.PrintHeatMap();
 		}
 	}
 }

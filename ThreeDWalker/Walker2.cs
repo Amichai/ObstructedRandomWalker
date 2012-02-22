@@ -28,7 +28,7 @@ namespace ThreeDWalker {
 				centerPoints.Add(pt);
 			}
 			double angleOffset = Math.PI / 2;
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 2; i++) {
 				TwoDObstructions layer = new TwoDObstructions(centerPoints, radii, (int)Math.Ceiling(width), (int)Math.Ceiling(height));
 				obstructions.AddLayer(layer, i * angleOffset);
 			}

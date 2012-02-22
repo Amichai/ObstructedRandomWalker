@@ -53,11 +53,9 @@
     <Compile Include="FullPath.cs" />
     <Compile Include="Heatmap.cs" />
     <Compile Include="Obstructions2.cs" />
-    <Compile Include="OldImplementation\Obstructions.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OldImplementation\ThreeDWalker.cs" />
     <Compile Include="Walker2.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -8,7 +8,7 @@ using System.Drawing;
 
 namespace ThreeDWalker {
 	public class Heatmap {
-		private int stepsToAssess, magnification, size, nt,ns;
+		private int stepsToAssess, magnification, size, nt, ns;
 		/// <param name="ns">this is the elementary time step between measurements</param>
 		/// <param name="nt">gives the number of measurements to take as ns*ns*k*k as k goes from 1 to nt</param>
 		public Heatmap(int ns, int nt, int magnification, int size) {

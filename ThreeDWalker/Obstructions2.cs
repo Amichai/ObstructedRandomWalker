@@ -12,20 +12,6 @@ namespace ThreeDWalker {
 		///retest for collision
 		///
 		private int width, height;
-		//public Obstructions2(List<TwoDObstructions> layers, int width, int height) {
-		//    this.layers = layers;
-		//    this.width = width;
-		//    this.height = height;
-		//}
-
-		//public Obstructions2(TwoDObstructions layer, int numOfLayers, double angleOffset) {
-		//    for (int i = 0; i < numOfLayers; i++) {
-		//        layer.SetAngle(angleOffset * i);
-		//        this.layers.Add(layer);
-		//    }
-		//    this.height = layer.Height();
-		//    this.width = layer.Width();
-		//}
 
 		public void AddLayer(TwoDObstructions layer, double angleOffset) {
 			layer.SetAngle(angleOffset);
