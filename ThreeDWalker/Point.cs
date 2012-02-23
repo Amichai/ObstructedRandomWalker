@@ -28,7 +28,7 @@ namespace ThreeDWalker {
 			return new Point(this.X + x, this.Y + y, this.Z + z);
 		}
 
-		public Point CorrectForPeriodicBoundaries(double width, double height, double depth){
+		public Point CorrectForPeriodicBoundaries(double width, double height, double depth = double.MinValue){
 			if (width != double.MinValue && X > 0) {
 				X -= ((int)X / (int)width) * width;
 			}

@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Common;
-using SLaks.Progression.Display.WinForms;
 using System.Diagnostics;
 
 namespace Walker {

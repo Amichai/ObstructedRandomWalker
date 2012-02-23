@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreeDWalker", "ThreeDWalke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFChart", "..\..\..\Third Party Source\Charting\WPFChart3d\WPFChart\WPFChart\WPFChart.csproj", "{4594058D-A96A-4B11-93B5-707215E40231}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PictureWalker", "PictureWalker\PictureWalker.csproj", "{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}"
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = RandomWalker.vsmdi
@@ -79,6 +81,18 @@ Global
 		{4594058D-A96A-4B11-93B5-707215E40231}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{4594058D-A96A-4B11-93B5-707215E40231}.Release|Win32.ActiveCfg = Release|Any CPU
 		{4594058D-A96A-4B11-93B5-707215E40231}.Release|x86.ActiveCfg = Release|Any CPU
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Debug|Win32.ActiveCfg = Debug|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Debug|x86.ActiveCfg = Debug|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Debug|x86.Build.0 = Debug|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Release|Any CPU.ActiveCfg = Release|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Release|Mixed Platforms.Build.0 = Release|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Release|Win32.ActiveCfg = Release|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Release|x86.ActiveCfg = Release|x86
+		{38782C45-D8A1-4E14-A01E-DDB0E0B7583C}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

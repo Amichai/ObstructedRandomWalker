@@ -28,7 +28,7 @@ namespace ThreeDWalker {
 			return fullPath.AsEnumerable();
 		}
 
-		public void PrintProjections(int magnification) {
+		public void PrintProjections(int magnification,string filepath = @"c:\users\amichai\documents\visual studio 2010\projects\randomwalker\threedwalker\bin\debug\") {
 			xMin *= magnification; yMin *= magnification; zMin *= magnification;
 			xMax *= magnification; yMax *= magnification; zMax *= magnification;
 			double width = (xMax - xMin);
@@ -43,8 +43,6 @@ namespace ThreeDWalker {
 				xzProj.SetPixel((int)(pt.X - xMin), (int)(pt.Z - zMin), System.Drawing.Color.Black);
 				yzProj.SetPixel((int)(pt.Y - yMin), (int)(pt.Z - zMin), System.Drawing.Color.Black);
 			}
-			string filepath = @"c:\users\amichai\documents\visual studio 2010\projects\randomwalker\threedwalker\bin\debug\";
-
 			xyProj.Save(filepath + "XYProjection.bmp");
 			xzProj.Save(filepath + "XZProjection.bmp");
 			yzProj.Save(filepath + "YZProjection.bmp");

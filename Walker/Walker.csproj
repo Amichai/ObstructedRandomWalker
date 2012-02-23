@@ -92,10 +92,6 @@
       <Project>{D7BCE323-ADC9-4E4C-9DB9-E54E3BE20559}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Progression\Progression\SLaks.Progression\SLaks.Progression.csproj">
-      <Project>{96A94E64-924A-4AAD-9A73-9C9A82CF8F18}</Project>
-      <Name>SLaks.Progression</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

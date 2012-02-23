@@ -11,12 +11,12 @@ namespace ThreeDWalker {
 		private int stepsToAssess, magnification, size, nt, ns;
 		/// <param name="ns">this is the elementary time step between measurements</param>
 		/// <param name="nt">gives the number of measurements to take as ns*ns*k*k as k goes from 1 to nt</param>
-		public Heatmap(int ns, int nt, int magnification, int size) {
+		public Heatmap(int ns, int nt, int magnification, int sideLength) {
 			this.stepsToAssess = ns * ns * nt * nt;
 			this.nt = nt;
 			this.ns = ns;
 			this.magnification = magnification;
-			this.size = size * magnification;
+			this.size = sideLength * magnification;
 			for (int i = 0; i < nt; i++) {
 				var a = new int[this.size, this.size, this.size];
 				threeDArrays.Add(a);
@@ -25,6 +25,20 @@ namespace ThreeDWalker {
 		List<int[, ,]> threeDArrays = new List<int[, ,]>();
 		//As paths get added, add to this data set
 		private LinkedList<Point> points = new LinkedList<Point>();
+
+		public void AddStep(Point newPoint, int intensity) {
+			if (points.Count() >= stepsToAssess) {
+				for (int i = 0; i < this.nt; i++) {
+					int stepToSave = i * i * this.ns * this.ns;
+					for (int j = 0; j < intensity; j++)
+						incrementHeatMapValues(points.ElementAt(stepToSave), newPoint, i);
+				}
+				points.RemoveFirst();
+			}
+			points.AddLast(newPoint);
+			if (points.Count() > this.stepsToAssess)
+				throw new Exception("The rolling cache is too big");
+		}
 
 		public void AddStep(Point newPoint) {
 			if (points.Count() >= stepsToAssess) {
@@ -52,7 +66,7 @@ namespace ThreeDWalker {
 			}
 		}
 
-		internal void Print() {
+		public void Print() {
 			for (int idx = nt - 1; idx >= 0; idx--) {
 				int counter = 0;
 				for (int i = 0; i < this.size; i++) {

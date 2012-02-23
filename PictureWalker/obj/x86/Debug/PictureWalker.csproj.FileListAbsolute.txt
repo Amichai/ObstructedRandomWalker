@@ -1,0 +1,13 @@
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\PictureWalker.exe
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\PictureWalker.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\Common.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\ThreeDWalker.exe
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\MathNet.Numerics.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\zlib.net.dll
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\Common.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\ThreeDWalker.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\MathNet.Numerics.pdb
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\bin\Debug\MathNet.Numerics.xml
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\obj\x86\Debug\PictureWalker.exe
+C:\Users\Amichai\Documents\Visual Studio 2010\Projects\RandomWalker\PictureWalker\obj\x86\Debug\PictureWalker.pdb
