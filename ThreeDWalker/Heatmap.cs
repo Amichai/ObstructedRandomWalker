@@ -67,16 +67,18 @@ namespace ThreeDWalker {
 		}
 
 		public void Print() {
+			char[] chart = Utilities.ColorConversionChart();
 			for (int idx = nt - 1; idx >= 0; idx--) {
 				int counter = 0;
 				for (int i = 0; i < this.size; i++) {
 					int[,] matrixToPrint = new int[this.size, this.size];
 					for (int j = 0; j < this.size; j++) {
 						for (int k = 0; k < this.size; k++) {
-							matrixToPrint[j, k] = threeDArrays[idx][j, k, i];
+							matrixToPrint[j, k] = threeDArrays[idx][i, j, k];
+							matrixToPrint[j, k] += threeDArrays[idx][k, i, j];
 						}
 					}
-					var B = matrixToPrint.ConvertToBitmap(Color.White);
+					var B = matrixToPrint.ConvertToBitmap(chart);
 					B.Save(@"c:\users\amichai\documents\visual studio 2010\projects\randomwalker\threedwalker\bin\debug\heatmap" + (nt - idx).ToString() + "steps" + (++counter).ToString() + ".bmp");
 				}
 			}
